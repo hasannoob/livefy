@@ -1,70 +1,99 @@
 body {
-  background: #000;
-  color: #fff;
+  background: #0d0d0d;
+  color: white;
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
 }
 
 header {
-  background: #222;
+  background: #111;
   padding: 15px;
   text-align: center;
   font-size: 24px;
+  border-bottom: 1px solid #222;
 }
 
-.match-list {
+.matches {
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
 
 .match-card {
-  background: #1e1e1e;
+  background: #1a1a1a;
   border: 1px solid #333;
   padding: 15px;
-  margin: 8px 0;
+  margin-bottom: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .match-card:hover {
-  background: #333;
+  background: #222;
 }
 
-.player-container {
-  display: none;
-  padding: 15px;
-  background: #111;
+/* Bottom Sheet Player */
+.bottom-sheet {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  background: #121212;
   border-top: 2px solid #444;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
+  transition: bottom 0.4s ease-in-out;
+  padding: 10px;
+  z-index: 999;
+}
+
+.bottom-sheet.active {
+  bottom: 0;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sheet-header button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 video {
   width: 100%;
-  max-height: 300px;
-  background: #000;
-  border: 1px solid #555;
+  border-radius: 10px;
+  margin: 10px 0;
+  background: black;
 }
 
-button {
+.server-section button {
   background: green;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 8px 15px;
   margin: 5px;
-  cursor: pointer;
   border-radius: 5px;
-  transition: 0.3s;
+  cursor: pointer;
 }
 
-button:hover {
+.server-section button:hover {
   background: darkgreen;
 }
 
-.close-btn {
-  background: red;
+.upcoming-section ul {
+  list-style: none;
+  padding: 0;
 }
 
-ul li {
+.upcoming-section li {
+  background: #1f1f1f;
   margin: 5px 0;
+  padding: 8px;
+  border-radius: 5px;
 }

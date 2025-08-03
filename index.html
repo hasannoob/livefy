@@ -1,479 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRICFy TV</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: black;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Toolbar styling */
-.toolbar {
-display: flex;
-align-items: center;
-background-color: #111;
-padding: 10px;
-transition: opacity 0.3s ease;
-}
-.toolbar.hidden {
-opacity: 0;
-pointer-events: none;
-}
-.toolbar .menu-icon {
-font-size: 25px;
-cursor: pointer;
-margin-right: 15px;
-color: #00ff00;
-}
-.toolbar h1 {
-margin: 0;
-font-size: 24px;
-color: #00ff00;
-font-weight: bold;
-}
-
-/* Welcome text box styling */
-.welcome-box {
-    background-color: #333;
-    padding: 10px;
-    border: 2px solid Green;
-    margin-top: 10px;
-    overflow: hidden;
-    position: relative;
-}
-
-/* Animated title style */
-.welcome-text {
-    display: inline-block;
-    white-space: nowrap;
-    animation: marquee 15s linear infinite;
-    font-size: 20px;
-    color: #00ff00;
-    font-weight: bold;
-}
-
-/* Animation keyframe */
-@keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
-        .content {
-            padding: 20px;
-        }
-
-        .match-card {
-            background-color: #222;
-            border: 1px solid #00ffc8;
-            border-radius: 10px;
-            margin-bottom: 13px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .match-card:hover {
-            transform: scale(1.02); /* Scale effect on hover */
-        }
-
-        .match-title {
-            background-color: #000;
-            color: #fff;
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-bottom: 9px;
-        }
-
-        .team {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 15px 0;
-        }
-
-        .team img {
-            width: 45px; /* Reduced logo size */
-            height: 40px;
-            border-radius: 45%; /* Circular flag */
-            border: 1px solid blue; /* White border */
-        }
-
-        .team p {
-            margin-top: 5px;
-            font-size: 14px; /* Reduced font size for team name */
-            color: white; /* Stylish blue */
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .team-name {
-            text-align: center;
-            margin-top: 5px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .match-info {
-            text-align: center;
-        }
-
-        .time {
-            font-size: 17px;
-            color: white;
-            font-weight: bold;
-        }
-
-        .date {
-            font-size: 14px;
-            color: #00FF00;
-            margin-top: 5px;
-        }
-
-        .match-stage {
-            background-color: black;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 10px;
-            font-size: 12px;
-            display: inline-block;
-            margin-top: 8px;
-        }
-
-        .live-animation {
-            color: #C80815;
-            font-size: 20px;
-            font-weight: bold;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            10% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Video Player Styles */
-        #video-player {display: none; /* Initially hidden */
-            position: fixed; /* Fixed position */
-            top: 0;
-            left: 0;
-            width: 100vw; /* Full width */
-            height: 100vh; /* Full height */
-            background-color: rgba(0, 0, 0, 0.9); /* Darker background */
-            z-index: 1000; /* On top of everything */
-            justify-content: center; /* Centering */
-            align-items: center; /* Centering */
-            flex-direction: column; /* Stack elements vertically */
-        }
-
-        #video {
-            width: 100%; /* Video width */
-            height: auto; /* Maintain aspect ratio */
-            border: 1px solid #00ff00; /* Green border */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 4px 20px rgba(0, 255, 0, 0.6); /* Glow effect */
-            margin-bottom: 20px; /* Space between video and buttons */
-        }
-
-        #server-buttons {
-            display: flex; /* Flexbox for buttons */
-            justify-content: center; /* Center buttons */
-            margin-top: 10px; /* Space above buttons */
-        }
-
-        .server-button {
-            background-color: #00ff00; /* Green background */
-            color: black; /* Black text */
-            border: none; /* No border */
-            border-radius: 5px; /* Rounded corners */
-            padding: 10px 20px; /* Padding */
-            font-size: 16px; /* Font size */
-            margin: 0 10px; /* Space between buttons */
-            cursor: pointer; /* Pointer cursor */
-            transition: background-color 0.3s; /* Transition for hover effect */
-        }
-
-        .server-button:hover {
-            background-color: #00cc00; /* Darker green on hover */
-        }
-
-        #close-btn {
-            position: absolute; /* Positioned close button */
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            color: white;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        #close-btn:hover {
-            transform: scale(1.2); /* Scale effect on hover */
-        }
-
-/* Banner styling */
-.banner {
-margin: 20px auto;
-text-align: center;
-background-color: #000000;
-padding: 20px;
-border-radius: 10px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-}
-
-.banner img {
-width: 100%;
-max-width: 600px;
-height: auto;
-border-radius: 5px;
-}
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BDIX‑TV Style Live</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    header {
+      padding: 15px;
+      text-align: center;
+      background: #222;
+      font-size: 1.5rem;
+    }
+    .channels {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+      gap: 15px;
+      padding: 15px;
+    }
+    .channel-card {
+      background: #222;
+      border: 2px solid #444;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .channel-card video {
+      width: 100%;
+      height: auto;
+    }
+    .channel-title {
+      padding: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    footer {
+      background: #222;
+      color: #aaa;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
+  <header>Live Channels</header>
+  <div class="channels" id="channels-container">
+    <!-- JS দিয়ে কার্ড অ্যাড হবে -->
+  </div>
+  <footer>&copy; 2025 YourTVClone</footer>
 
-    <!-- Toolbar -->
-<div id="toolbar" class="toolbar">
-<span class="menu-icon">☰</span>
-<h1>LIVE BD 24 Powered By Hasan</h1>
-</div>
+  <script>
+    const channels = [
+      { name: "Gazi TV", url: "https://example.com/gazi.m3u8" },
+      { name: "T Sports", url: "https://example.com/tsports.m3u8" }
+    ];
 
-<!-- Welcome Text -->
-    <div class="welcome-box">
-        <div class="welcome-text">Welcome to LIVE BD 24 App! Enjoy Live Matches 🏏🥎⚽</div>
-    </div>
-
-    <!-- Content -->
-    <div class="content">
-
-        <!-- Match Card 1 -->
-        <div class="match-card" onclick="playVideo('.....................')">
-            <div class="match-title"> UEFA EURO LEAGUE</div>
-            <div class="team">
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Galatasaray_4_Sterne_Logo.svg/1200px-Galatasaray_4_Sterne_Logo.svg.png" alt="LPL Logo">
-                    <div class="team-name">Galatasaray</div>
-                </div>
-                <div class="match-info">
-                    <div class="time" id="time1">11:45 PM</div> <!-- Match 1 time -->
-                    <div class="date" id="date1">07-11-2024</div> <!-- Match 1 date -->
-                    <div id="live1" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
-                </div>
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Tottenham_Hotspur.svg/1200px-Tottenham_Hotspur.svg.png" alt="LPL Logo">
-                    <div class="team-name">Tottenham</div>
-                </div>
-            </div>
-            <div class="match-stage">Match 1</div>
-        </div>
- 
-        
- <!-- Match Card 2 -->
-        <div class="match-card" onclick="playVideo('https://bcovlive-a.akamaihd.net/r2d2c4ca5bf57456fb1d16255c1a535c8/eu-west-1/eu-west-1/6058004203001/profile_2/chunklist.m3u8')">
-            <div class="match-title"> UEFA EURO LEAGUE</div>
-            <div class="team">
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png" alt="LPL Logo">
-                    <div class="team-name">Man United</div>
-                </div>
-                <div class="match-info">
-                    <div class="time" id="time2">10:00 PM</div> <!-- Match 2 time -->
-                    <div class="date" id="date2">07-11-2024</div> <!-- Match 2 date -->
-                    <div id="live2" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
-                </div>
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/0/0c/PAOK_FC_Logo.png" alt="LPL Logo">
-                    <div class="team-name">PAOK FC</div>
-                </div>
-            </div>
-            <div class="match-stage">Match 2</div>
-        </div>        
-        
-        
-        
-        
-
-<!-- Match Card 3 -->
-        <div class="match-card" onclick="playVideo('...............')">
-            <div class="match-title">Saudi Pro League</div>
-            <div class="team">
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Al-Hilal_SFC_logo.svg/180px-Al-Hilal_SFC_logo.svg.png" alt="LPL Logo">
-                    <div class="team-name">Al Hilal</div>
-                </div>
-                <div class="match-info">
-                    <div class="time" id="time3">08:40 PM</div> <!-- Match 3 time -->
-                    <div class="date" id="date3">08-11-2024</div> <!-- Match 3 date -->
-                    <div id="live3" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
-                </div>
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Al-Ittihad_Club_%28Jeddah%29_logo.svg/640px-Al-Ittihad_Club_%28Jeddah%29_logo.svg.png" alt="LPL Logo">
-                    <div class="team-name">Al Ittihad</div>
-                </div>
-            </div>
-            <div class="match-stage">Match</div>
-        </div>
-       
-
-        <!-- Match Card 4 -->
-        <div class="match-card" onclick="playVideo('....................')">
-            <div class="match-title">Saudi Pro League</div>
-            <div class="team">
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Al-Ittihad_Club_%28Jeddah%29_logo.svg/640px-Al-Ittihad_Club_%28Jeddah%29_logo.svg.png" alt="ENG Logo">
-                    <div class="team-name">Al Riyadh </div>
-                </div>
-                <div class="match-info">
-                    <div class="time" id="time4">11:00 PM</div> <!-- Match 4 time -->
-                    <div class="date" id="date4">08-11-2024</div> <!-- Match 4 date -->
-                    <div id="live4" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
-                </div>
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/ac/Al_Nassr_FC_Logo.svg/800px-Al_Nassr_FC_Logo.svg.png" alt="NZ Logo">
-                    <div class="team-name">Al Nassr</div>
-                </div>
-            </div>
-            <div class="match-stage">Football</div>
-        </div>
-
-
-    </div>
-
-
-    <!-- Video Player -->
-    <div id="video-player">
-        <button id="close-btn" onclick="closeVideo()">✖</button>
-        <video id="video" controls autoplay>
-            <source id="video-source" src="" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-
-        <!-- Server Buttons -->
-        <div id="server-buttons">
-            <button class="server-button" onclick="selectServer('https://bcovlive-a.akamaihd.net/r2d2c4ca5bf57456fb1d16255c1a535c8/eu-west-1/eu-west-1/6058004203001/profile_2/chunklist.m3u8')">Server 1</button>
-            <button class="server-button" onclick="selectServer('..............')">Server 2</button>
-            <button class="server-button" onclick="selectServer('.............')">Server 3</button>
-        </div>
-    </div>
-
-
-
-
-
-<script type='text/javascript' src='//pl24303047.profitablecpmrate.com/a0/34/fc/a034fc5fa86c119b4c8d2eb4f4beef3b.js'></script>
-
-
-<script async="async" data-cfasync="false" src="//pl24312270.profitablecpmrate.com/fc4d8d8e3c2cef24340c20aef118e772/invoke.js"></script> <div id="container-fc4d8d8e3c2cef24340c20aef118e772"></div>
-
-
-
-
-
-    <script>
-
- 
-// লাইভ অ্যানিমেশন শুরু ও শেষের সময় নির্ধারণ
-        const match1StartTime = '11:45'; // ম্যাচ ১ শুরু সময় (HH:MM ফরম্যাটে)
-        const match1EndTime = '01:59';   // ম্যাচ ১ শেষ সময়
-
-        const match2StartTime = '22:00'; // ম্যাচ ২ শুরু সময় (HH:MM ফরম্যাটে)
-        const match2EndTime = '13:50';   // ম্যাচ ২ শেষ সময়
-
-        const match3StartTime = '08:45'; // ম্যাচ ৩ শুরু সময় (HH:MM ফরম্যাটে)
-        const match3EndTime = '10:00';   // ম্যাচ ৩ শেষ সময়
-
-        const match4StartTime = '08:45'; // ম্যাচ ৪ শুরু সময় (HH:MM ফরম্যাটে)
-        const match4EndTime = '10:00';   // ম্যাচ ৪ শেষ সময়
-
-
-
-
-        function checkMatchStatus() {
-            const currentTime = new Date();
-            const currentHourMinute = currentTime.toTimeString().slice(0, 5); // বর্তমান সময় (HH:MM ফরম্যাটে)
-
-
-            // Match 1: বাংলাদেশ বনাম ভারত
-            if (currentHourMinute >= match1StartTime && currentHourMinute <= match1EndTime) {
-                document.getElementById('time1').classList.add('hidden');
-                document.getElementById('date1').classList.add('hidden');
-                document.getElementById('live1').classList.remove('hidden');
-            } else {
-                document.getElementById('time1').classList.remove('hidden');
-                document.getElementById('date1').classList.remove('hidden');
-                document.getElementById('live1').classList.add('hidden');
-            }
-
-  // Match 2: বাংলাদেশ বনাম ভারত
-            if (currentHourMinute >= match2StartTime && currentHourMinute <= match2EndTime) {
-                document.getElementById('time2').classList.add('hidden');
-                document.getElementById('date2').classList.add('hidden');
-                document.getElementById('live2').classList.remove('hidden');
-            } else {
-                document.getElementById('time2').classList.remove('hidden');
-                document.getElementById('date2').classList.remove('hidden');
-                document.getElementById('live2').classList.add('hidden');
-            }
-
-            // Match 3: Women's T20 World Cup
-            if (currentHourMinute >= match3StartTime && currentHourMinute <= match3EndTime) {
-                document.getElementById('time3').classList.add('hidden');
-                document.getElementById('date3').classList.add('hidden');
-                document.getElementById('live3').classList.remove('hidden');
-            } else {
-                document.getElementById('time3').classList.remove('hidden');
-                document.getElementById('date3').classList.remove('hidden');
-                document.getElementById('live3').classList.add('hidden');
-            }
-
-             // Match 4: Women's T20 World Cup
-            if (currentHourMinute >= match4StartTime && currentHourMinute <= match4EndTime) {
-                document.getElementById('time4').classList.add('hidden');
-                document.getElementById('date4').classList.add('hidden');
-                document.getElementById('live4').classList.remove('hidden');
-            } else {
-                document.getElementById('time4').classList.remove('hidden');
-                document.getElementById('date4').classList.remove('hidden');
-                document.getElementById('live4').classList.add('hidden');
-            }           
-        }
-
-    // প্রতি ১ সেকেন্ডে চেক করা হবে ম্যাচের স্ট্যাটাস
-        setInterval(checkMatchStatus, 1000);
-
-// Video Player Functionality
-        function playVideo(videoSrc) {
-            document.getElementById('video-player').style.display = 'flex';
-            document.getElementById('video-source').src = videoSrc;
-            document.getElementById('video').load();
-        }
-
-        function closeVideo() {
-            document.getElementById('video-player').style.display = 'none';
-            document.getElementById('video').pause();
-        }
-
-        function selectServer(serverSrc) {
-            document.getElementById('video-source').src = serverSrc;
-            document.getElementById('video').load();
-        }
-
-    </script>
-
+    const container = document.getElementById("channels-container");
+    channels.forEach(ch => {
+      const card = document.createElement("div");
+      card.className = "channel-card";
+      card.innerHTML = `
+        <video controls autoplay muted playsinline src="${ch.url}"></video>
+        <div class="channel-title">${ch.name}</div>`;
+      container.appendChild(card);
+    });
+  </script>
 </body>
 </html>

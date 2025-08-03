@@ -1,4 +1,3 @@
-// Sample Data
 const matches = [
   { team1: "Bournemouth", team2: "West Ham", status: "Live" },
   { team1: "Porto", team2: "Atl. Madrid", status: "Live" },
@@ -22,27 +21,29 @@ const playerContainer = document.getElementById("playerContainer");
 const videoPlayer = document.getElementById("videoPlayer");
 const serverButtons = document.getElementById("serverButtons");
 const upcomingList = document.getElementById("upcomingList");
+const matchTitle = document.getElementById("matchTitle");
 
 // Load Matches
 matches.forEach((m) => {
   const div = document.createElement("div");
   div.className = "match-card";
   div.innerHTML = `<strong>${m.team1} vs ${m.team2}</strong><br><small>${m.status}</small>`;
-  div.onclick = () => openPlayer();
+  div.onclick = () => openPlayer(`${m.team1} vs ${m.team2}`);
   matchList.appendChild(div);
 });
 
-// Open Player
-function openPlayer() {
-  playerContainer.style.display = "block";
+// Open Player (Slide Up)
+function openPlayer(title) {
+  playerContainer.classList.add("active");
+  matchTitle.textContent = title;
   videoPlayer.src = servers[0];
   loadServers();
   loadUpcoming();
 }
 
-// Close Player
+// Close Player (Slide Down)
 function closePlayer() {
-  playerContainer.style.display = "none";
+  playerContainer.classList.remove("active");
   videoPlayer.pause();
 }
 

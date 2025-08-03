@@ -2,228 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Livefy - Multi Stream</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      background-color: #121212;
-      color: white;
-      font-family: sans-serif;
-      margin: 0;
-      padding-bottom: 60px;
-    }
-
-    .header {
-      background-color: #1e1e1e;
-      padding: 10px 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .categories {
-      display: flex;
-      overflow-x: auto;
-      padding: 10px;
-      background-color: #1c1c1c;
-      gap: 10px;
-    }
-
-    .cat {
-      background-color: #222;
-      padding: 8px 12px;
-      border-radius: 20px;
-      white-space: nowrap;
-      border: 1px solid #2e2e2e;
-      color: #00ffcc;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .cat.active {
-      background-color: #00ffcc;
-      color: black;
-    }
-
-    .matches {
-      padding: 15px;
-    }
-
-    .match-card {
-      background-color: #1a1a1a;
-      border: 1px solid #00ff00;
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 25px;
-    }
-
-    .match-title {
-      font-size: 14px;
-      color: #ccc;
-      margin-bottom: 6px;
-    }
-
-    .teams {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: bold;
-    }
-
-    .status {
-      color: red;
-      font-size: 12px;
-    }
-
-    .time {
-      color: #0f0;
-      font-size: 12px;
-      margin-top: 6px;
-    }
-
-    iframe.player {
-      width: 100%;
-      height: 200px;
-      border: none;
-      margin-top: 10px;
-      border-radius: 10px;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #1e1e1e;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      border-top: 1px solid #333;
-    }
-
-    .bottom-nav div {
-      color: #aaa;
-      font-size: 14px;
-    }
-
-    .hidden {
-      display: none;
-    }
-  </style>
+  <title>CRICFy Clone</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <h1>🔥 CRICFy Clone</h1>
+  </header>
 
-  <div class="header">
-    <h3>Livefy</h3>
-    <div>🔔</div>
+  <!-- Match List -->
+  <div class="match-list" id="matchList"></div>
+
+  <!-- Player Section -->
+  <div class="player-container" id="playerContainer">
+    <video id="videoPlayer" controls></video>
+
+    <h3>Select Server</h3>
+    <div id="serverButtons"></div>
+
+    <h3>Upcoming Matches</h3>
+    <ul id="upcomingList"></ul>
+
+    <button class="close-btn" onclick="closePlayer()">❌ Close Player</button>
   </div>
 
-  <div class="categories" id="categoryFilter">
-    <div class="cat active" data-cat="all">All</div>
-    <div class="cat" data-cat="football">Football</div>
-    <div class="cat" data-cat="wwe">WWE</div>
-    <div class="cat" data-cat="cricket">Cricket</div>
-  </div>
-
-  <div class="matches" id="matchesContainer">
-
-    <!-- MATCH 1 -->
-    <div class="match-card" data-cat="football">
-      <div class="match-title">Football | Club Friendly Games</div>
-      <div class="teams">
-        <span>Bournemouth</span>
-        <span class="status">🔴 Live</span>
-        <span>West Ham</span>
-      </div>
-      <div class="time">Live Now</div>
-      <iframe class="player" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-    </div>
-
-    <!-- MATCH 2 -->
-    <div class="match-card" data-cat="football" data-start="2025-08-04T03:00:00Z">
-      <div class="match-title">Football | Club Friendly Games</div>
-      <div class="teams">
-        <span>Man Utd</span>
-        <span>vs</span>
-        <span>Everton</span>
-      </div>
-      <div class="time countdown">Loading...</div>
-      <iframe class="player" src="https://www.youtube.com/embed/sBws8MSXN7A" allowfullscreen></iframe>
-    </div>
-
-    <!-- MATCH 3 -->
-    <div class="match-card" data-cat="wwe" data-start="2025-08-04T04:00:00Z">
-      <div class="match-title">WWE | SummerSlam 2025</div>
-      <div class="teams">
-        <span>WWE</span>
-        <span>vs</span>
-        <span>SummerSlam</span>
-      </div>
-      <div class="time countdown">Loading...</div>
-      <iframe class="player" src="https://www.youtube.com/embed/1w7OgIMMRc4" allowfullscreen></iframe>
-    </div>
-
-    <!-- MATCH 4 -->
-    <div class="match-card" data-cat="cricket">
-      <div class="match-title">Cricket | T20 Asia Cup</div>
-      <div class="teams">
-        <span>India</span>
-        <span class="status">🔴 Live</span>
-        <span>Pakistan</span>
-      </div>
-      <div class="time">Live Now</div>
-      <iframe class="player" src="https://www.youtube.com/embed/e-ORhEE9VVg" allowfullscreen></iframe>
-    </div>
-
-  </div>
-
-  <div class="bottom-nav">
-    <div>📺 Live</div>
-    <div>⚽ Sports</div>
-    <div>📂 Categories</div>
-  </div>
-
-  <script>
-    // 🕒 Countdown Logic
-    function updateCountdowns() {
-      const countdownEls = document.querySelectorAll('.countdown');
-      countdownEls.forEach(el => {
-        const parent = el.closest('.match-card');
-        const start = new Date(parent.getAttribute('data-start'));
-        const now = new Date();
-        const diff = start - now;
-        if (diff <= 0) {
-          el.textContent = 'Live Now';
-        } else {
-          const hrs = String(Math.floor(diff / 3600000)).padStart(2, '0');
-          const mins = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-          const secs = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-          el.textContent = `Match Starting In: ${hrs}:${mins}:${secs}`;
-        }
-      });
-    }
-    setInterval(updateCountdowns, 1000);
-    updateCountdowns();
-
-    // 🔍 Category Filter
-    const cats = document.querySelectorAll('.cat');
-    const matches = document.querySelectorAll('.match-card');
-
-    cats.forEach(cat => {
-      cat.addEventListener('click', () => {
-        cats.forEach(c => c.classList.remove('active'));
-        cat.classList.add('active');
-
-        const selected = cat.getAttribute('data-cat');
-        matches.forEach(match => {
-          if (selected === 'all' || match.getAttribute('data-cat') === selected) {
-            match.classList.remove('hidden');
-          } else {
-            match.classList.add('hidden');
-          }
-        });
-      });
-    });
-  </script>
-
+<script src="script.js"></script>
 </body>
 </html>

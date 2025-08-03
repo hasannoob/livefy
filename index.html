@@ -1,74 +1,57 @@
-<!DOCTYPE html>
-<html lang="bn">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BDIX‑TV Style Live</title>
-  <style>
-    body {
-      margin: 0;
-      background: #111;
-      color: #fff;
-      font-family: sans-serif;
-    }
-    header {
-      padding: 15px;
-      text-align: center;
-      background: #222;
-      font-size: 1.5rem;
-    }
-    .channels {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-      gap: 15px;
-      padding: 15px;
-    }
-    .channel-card {
-      background: #222;
-      border: 2px solid #444;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .channel-card video {
-      width: 100%;
-      height: auto;
-    }
-    .channel-title {
-      padding: 10px;
-      text-align: center;
-      font-size: 1.1rem;
-    }
-    footer {
-      background: #222;
-      color: #aaa;
-      text-align: center;
-      padding: 10px;
-      font-size: 0.9rem;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BDIX TV 24 Clone</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>Live Channels</header>
-  <div class="channels" id="channels-container">
-    <!-- JS দিয়ে কার্ড অ্যাড হবে -->
-  </div>
-  <footer>&copy; 2025 YourTVClone</footer>
+  <header>
+    <div class="logo">BDIX <span>TV 24</span></div>
+    <input type="text" placeholder="Search..." class="search">
+  </header><marquee class="notice">Updates: সহজে ভিডিও প্লে হতে সর্বোচ্চ ১ মিনিট অপেক্ষা করুন</marquee>
 
-  <script>
-    const channels = [
-      { name: "Gazi TV", url: "https://example.com/gazi.m3u8" },
-      { name: "T Sports", url: "https://example.com/tsports.m3u8" }
-    ];
-
-    const container = document.getElementById("channels-container");
-    channels.forEach(ch => {
-      const card = document.createElement("div");
-      card.className = "channel-card";
-      card.innerHTML = `
-        <video controls autoplay muted playsinline src="${ch.url}"></video>
-        <div class="channel-title">${ch.name}</div>`;
-      container.appendChild(card);
-    });
-  </script>
+  <section class="channel-section">
+    <div class="section-header">
+      <h2>Live Channel</h2><button>SEE ALL</button>
+    </div>
+    <div class="channel-list">
+      <a href="player.html?channel=tsports" class="channel-card">
+        <span class="live-badge">LIVE</span>
+        <img src="tsports.png" alt="T Sports HD">
+        <p>T Sports HD</p>
+      </a>
+      <a href="player.html?channel=willow" class="channel-card">
+        <img src="willow.png" alt="Willow HD">
+        <p>Willow HD</p>
+      </a>
+      <a href="player.html?channel=ptv" class="channel-card">
+        <span class="live-badge">LIVE</span>
+        <img src="ptv.png" alt="PTV Sports">
+        <p>PTV Sports</p>
+      </a>
+    </div>
+  </section>  <section class="channel-section">
+    <div class="section-header">
+      <h2>Sports Channel</h2><button>SEE ALL</button>
+    </div>
+    <div class="channel-list">
+      <a href="player.html?channel=tsports" class="channel-card">
+        <span class="live-badge">LIVE</span>
+        <img src="tsports.png" alt="T Sports HD">
+        <p>T Sports HD</p>
+      </a>
+      <a href="player.html?channel=geo" class="channel-card">
+        <img src="geo.png" alt="Geo Super">
+        <p>Geo Super</p>
+      </a>
+      <a href="player.html?channel=fancode" class="channel-card">
+        <img src="fancode.png" alt="FanCode">
+        <p>FanCode</p>
+      </a>
+    </div>
+  </section>  <footer>
+    &copy; 2025 BDIXTV Lite Clone
+  </footer>
 </body>
 </html>

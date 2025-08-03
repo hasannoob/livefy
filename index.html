@@ -7,25 +7,33 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <!-- Header -->
   <header>
-    <h1>🔥 CRICFy Clone</h1>
+    <h1> liveFy </h1>
   </header>
 
-  <!-- Match List -->
-  <div class="match-list" id="matchList"></div>
+  <!-- Match Cards -->
+  <section class="matches" id="matchList"></section>
 
-  <!-- Player Section -->
-  <div class="player-container" id="playerContainer">
+  <!-- Bottom Sheet Player -->
+  <div class="bottom-sheet" id="playerContainer">
+    <div class="sheet-header">
+      <span id="matchTitle">Match Title</span>
+      <button onclick="closePlayer()">✖</button>
+    </div>
+
     <video id="videoPlayer" controls></video>
 
-    <h3>Select Server</h3>
-    <div id="serverButtons"></div>
+    <div class="server-section">
+      <h3>Choose Server:</h3>
+      <div id="serverButtons"></div>
+    </div>
 
-    <h3>Upcoming Matches</h3>
-    <ul id="upcomingList"></ul>
-
-    <button class="close-btn" onclick="closePlayer()">❌ Close Player</button>
+    <div class="upcoming-section">
+      <h3>Upcoming Matches</h3>
+      <ul id="upcomingList"></ul>
+    </div>
   </div>
 
 <script src="script.js"></script>

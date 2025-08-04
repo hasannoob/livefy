@@ -1,54 +1,1074 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sports803 Clone</title>
-  <style>
-    body {background:#0b0e2f;color:white;font-family:'Segoe UI',sans-serif;margin:0;padding:0;}
-    header {background:#070a2d;padding:15px;text-align:center;font-size:24px;color:white;}
-    .match-list {display:flex;flex-direction:column;padding:10px;}
-    .match-card {background:#1e1e1e;border:1px solid #333;margin:5px 0;padding:10px;border-radius:8px;cursor:pointer;}
-    .match-card:hover {background:#333;}
-    .bottom-sheet {position:fixed;bottom:-100%;left:0;width:100%;background:#121212;border-top:2px solid #444;
-      transition:bottom 0.4s ease-in-out;padding:10px;}
-    .bottom-sheet.active {bottom:0;}
-    video {width:100%;border-radius:10px;margin:10px 0;}
-    button {background:green;color:white;border:none;padding:8px 15px;margin:5px;cursor:pointer;border-radius:5px;}
-    button:hover {background:darkgreen;}
-    .server-section h3, .upcoming-section h3 {margin-top:10px;}
-    .upcoming-section li {list-style:none;background:#1f1f1f;margin:5px 0;padding:5px;border-radius:5px;}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live BD 24 TV By HASAN</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: black;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Toolbar styling */
+.toolbar {
+display: flex;
+align-items: center;
+background-color: #111;
+padding: 10px;
+transition: opacity 0.3s ease;
+}
+.toolbar.hidden {
+opacity: 0;
+pointer-events: none;
+}
+.toolbar .menu-icon {
+font-size: 25px;
+cursor: pointer;
+margin-right: 15px;
+color: #00ff00;
+}
+.toolbar h1 {
+margin: 0;
+font-size: 24px;
+color: #00ff00;
+font-weight: bold;
+}
+
+/* Welcome text box styling */
+.welcome-box {
+    background-color: #333;
+    padding: 5px;
+    border: 2px solid Red;
+    margin-top: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Animated title style */
+.welcome-text {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 15s linear infinite;
+    font-size: 20px;
+    color: #00ff00;
+    font-weight: bold;
+}
+
+/* Animation keyframe */
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+        .content {
+            padding: 20px;
+        }
+
+        .match-card {
+            background-color: #222;
+            border: 1px solid #00ffc8;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        .match-card:hover {
+            transform: scale(1.09); /* Scale effect on hover */
+        }
+
+        .match-title {
+            background-color: #000;
+            color: #fff;
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: .0px;
+        }
+        
+        .team {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: .0px 0;
+        }
+
+        .team img {
+            width: 30px; /* Reduced logo size */
+            height: 30px;
+            border-radius: 50%; /* Circular flag */
+            border: 1px solid red; /* White border */
+        }
+
+        .team p {
+            margin-top: .0px;
+            font-size: 10px; /* Reduced font size for team name */
+            color: white; /* Stylish blue */
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .team-name {
+            text-align: center;
+            margin-top: .0px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .match-info {
+            text-align: center;
+        }
+
+        .time {
+            font-size: 15px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .date {
+            font-size: 10px;
+            color: #00FF00;
+            margin-top: .0px;
+        }
+
+        .match-stage {
+            background-color: black;
+            color: white;
+            padding: 1px 5px;
+            border-radius: 10px;
+            font-size: 8px;
+            display: inline-block;
+            margin-top: .0px;
+        }
+
+        .live-animation {
+            color: #C80815;
+            font-size: 15px;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            10% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Video Player Styles */
+        #video-player {display: none; /* Initially hidden */
+            position: fixed; /* Fixed position */
+            top: 0;
+            left: 0;
+            width: 100vw; /* Full width */
+            height: 100vh; /* Full height */
+            background-color: rgba(0, 0, 0, 0.9); /* Darker background */
+            z-index: 1000; /* On top of everything */
+            justify-content: center; /* Centering */
+            align-items: center; /* Centering */
+            flex-direction: column; /* Stack elements vertically */
+        }
+
+        #video {
+            width: 100%; /* Video width */
+            height: auto; /* Maintain aspect ratio */
+            border: 0px solid #00ff00; /* Red border */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 20px rgba(0, 255, 0, 0.6); /* Glow effect */
+            margin-bottom: 0px; /* Space between video and buttons */
+        }
+
+        #server-buttons {
+            display: flex; /* Flexbox for buttons */
+            justify-content: center; /* Center buttons */
+            margin-top: 0px; /* Space above buttons */
+        }
+
+        .server-button {
+            background-color: #00ff00; /* Green background */
+            color: black; /* Black text */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            padding: 10px 20px; /* Padding */
+            font-size: 16px; /* Font size */
+            margin: 0 10px; /* Space between buttons */
+            cursor: pointer; /* Pointer cursor */
+            transition: background-color 0.5s; /* Transition for hover effect */
+        }
+
+        .server-button:hover {
+            background-color: #00cc00; /* Darker green on hover */
+        }
+
+        #close-btn {
+            position: absolute; /* Positioned close button */
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #close-btn:hover {
+            transform: scale(1.2); /* Scale effect on hover */
+        }
+
+/* Banner styling */
+.banner {
+margin: 20px auto;
+text-align: center;
+background-color: #000000;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.banner img {
+width: 100%;
+max-width: 600px;
+height: auto;
+border-radius: 5px;
+}
+    </style>
 </head>
 <body>
-  <header>🔥 Sports803 Clone</header>
-  <div class="match-list" id="matchList"></div>
 
-  <div class="bottom-sheet" id="playerContainer">
-    <h2 id="matchTitle">Match Title</h2>
-    <video id="videoPlayer" controls></video>
-    <div class="server-section">
-      <h3>Choose Server:</h3>
-      <div id="serverButtons"></div>
+
+
+
+<!-- Welcome Text -->
+    <div class="welcome-box">
+        <div class="welcome-text">Welcome to LIVE BD 24 App! Enjoy Live Matches 🏏🥎⚽.....Powered By Live BD 24..❤️❤️</div>
     </div>
-    <div class="upcoming-section">
-      <h3>Upcoming Matches</h3>
-      <ul id="upcomingList"></ul>
+
+    <!-- Content -->
+    <div class="content">
+
+
+
+
+
+
+
+
+<!-- Match Card 3 -->
+        <div class="match-card" onclick="playVideo('https://svs.itworkscdn.net/smc4sportslive/smc4.smil/smc4sportspublish/smc4tv_720p/chunks.m3u8')">
+            <div class="match-title">Football ⚽</div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/510px-Flag_of_Saudi_Arabia.svg.png" alt="LPL Logo">
+                    <div class="team-name">KSA</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time3">07:30 PM</div> <!-- Match 3 time -->
+                    <div class="date" id="date3">28/12/2024</div> <!-- Match 3 date -->
+                    <div id="live3" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Flag_of_Iraq.svg/510px-Flag_of_Iraq.svg.png" alt="LPL Logo">
+                    <div class="team-name">IRQ</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+
+
+<!-- Match Card 5 -->
+        <div class="match-card" onclick="playVideo('https://crichd.iptvbd.xyz/m3u8.php/willowusa.m3u8')">
+            <div class="match-title">4th Test-Day | India Tour Of Australia</div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png" alt="LPL Logo">
+                    <div class="team-name">IND</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time5">06:00 AM</div> <!-- Match 5 time -->
+                    <div class="date" id="date5">27/12/2024</div> <!-- Match 5 date -->
+                    <div id="live5" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg" alt="LPL Logo">
+                    <div class="team-name">AUS</div>
+                </div>
+            </div>
+            <div class="match-stage">Cricket</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Match Card 4 -->
+        <div class="match-card" onclick="playVideo('https://crichd.iptvbd.xyz/m3u8.php/ptvpk.m3u8')">
+            <div class="match-title">Football  ⚽| English Premier League</div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="LPL Logo">
+                    <div class="team-name">Man United</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time4">12:00 AM</div> <!-- Match 4 time -->
+                    <div class="date" id="date4">27/12/2024</div> <!-- Match 4 date -->
+                    <div id="live4" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/c/c9/Wolverhampton_Wanderers_FC_crest.svg" alt="LPL Logo">
+                    <div class="team-name">Wolves</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+
+
+<!-- Match Card 7 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time7">06:30 AM</div> <!-- Match 7 time -->
+                    <div class="date" id="date7">26/12/2024</div> <!-- Match 7 date -->
+                    <div id="live7" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Match Card 2 -->
+        <div class="match-card" onclick="playVideo('http://103.96.235.18:8080/sports1/index.m3u8')">
+            <div class="match-title">National Cricket League</div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Bangladesh_NCL.jpg" alt="LPL Logo">
+                    <div class="team-name">NCL</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time2">09:30 AM</div> <!-- Match 2 time -->
+                    <div class="date" id="date2">26/12/2024</div> <!-- Match 2 date -->
+                    <div id="live2" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Bangladesh_NCL.jpg" alt="LPL Logo">
+                    <div class="team-name">NCL</div>
+                </div>
+            </div>
+            <div class="match-stage">Cricket</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+        <!-- Match Card 1 -->
+        <div class="match-card" onclick="playVideo('https://rtatv.akamaized.net/Content/HLS/Live/channel(RTA3)/variant.m3u8')">
+            <div class="match-title">Afghanistan vs Bangladesh 2nd ODI</div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Flag_of_Afghanistan_%282013%E2%80%932021%29.svg/1024px-Flag_of_Afghanistan_%282013%E2%80%932021%29.svg.png" alt="LPL Logo">
+                    <div class="team-name">AFG</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time1">03:45 PM</div> <!-- Match 1 time -->
+                    <div class="date" id="date1">11/11/2024</div> <!-- Match 1 date -->
+                    <div id="live1" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/800px-Flag_of_Bangladesh.svg.png" alt="LPL Logo">
+                    <div class="team-name">BAN</div>
+                </div>
+            </div>
+            <div class="match-stage">ODI 3 Of 3 (AFG Leads 1-1)</div>
+        </div>
+
+
+
+<!-- Match Card 6 -->
+        <div class="match-card" onclick="playVideo('http://125.209.88.166:45793/BRN/TenSports.stream/playlist.m3u8')">
+            <div class="match-title">Pakistan vs Australia 3rd ODI</div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/1024px-Flag_of_Pakistan.svg.png" alt="LPL Logo">
+                    <div class="team-name">Pakistan</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time6">10:00 AM</div> <!-- Match 6 time -->
+                    <div class="date" id="date6">10/11/2024</div> <!-- Match 6 date -->
+                    <div id="live6" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Flag_of_Australia_%28converted%29.svg/1280px-Flag_of_Australia_%28converted%29.svg.png" alt="LPL Logo">
+                    <div class="team-name">Australia</div>
+                </div>
+            </div>
+            <div class="match-stage">Pakistan Win 8 Wickets</div>
+        </div> 
+
+ 
+
+
+
+
+<!-- Match Card 8 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time8">06:30 AM</div> <!-- Match 8 time -->
+                    <div class="date" id="date8">26/12/2024</div> <!-- Match 8 date -->
+                    <div id="live8" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+
+<!-- Match Card 9 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time9">06:30 AM</div> <!-- Match 9 time -->
+                    <div class="date" id="date9">26/12/2024</div> <!-- Match 9 date -->
+                    <div id="live9" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+<!-- Match Card 10 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time10">06:30 AM</div> <!-- Match 10 time -->
+                    <div class="date" id="date10">26/12/2024</div> <!-- Match 10 date -->
+                    <div id="live10" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+<!-- Match Card 11 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time11">06:30 AM</div> <!-- Match 11 time -->
+                    <div class="date" id="date11">26/12/2024</div> <!-- Match 11 date -->
+                    <div id="live11" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+<!-- Match Card 12 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time12">06:30 AM</div> <!-- Match 12 time -->
+                    <div class="date" id="date12">26/12/2024</div> <!-- Match 12 date -->
+                    <div id="live12" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+
+<!-- Match Card 13 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time13">06:30 AM</div> <!-- Match 13 time -->
+                    <div class="date" id="date13">26/12/2024</div> <!-- Match 13 date -->
+                    <div id="live13" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+<!-- Match Card 14 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time14">06:30 AM</div> <!-- Match 14 time -->
+                    <div class="date" id="date14">26/12/2024</div> <!-- Match 14 date -->
+                    <div id="live14" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+<!-- Match Card 15 -->
+        <div class="match-card" onclick="playVideo('https://11.koora-live.video/hls/0/stream.m3u8')">
+            <div class="match-title">Football | English Premier 🏆 League </div>
+            <div class="team">
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="LPL Logo">
+                    <div class="team-name">Man City</div>
+                </div>
+                <div class="match-info">
+                    <div class="time" id="time15">06:30 AM</div> <!-- Match 15 time -->
+                    <div class="date" id="date15">26/12/2024</div> <!-- Match 15 date -->
+                    <div id="live15" class="live-animation hidden">LIVE NOW</div> <!-- Live animation -->
+                </div>
+                <div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg" alt="LPL Logo">
+                    <div class="team-name">Everton</div>
+                </div>
+            </div>
+            <div class="match-stage">Football</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
-    <button onclick="closePlayer()">❌ Close</button>
-  </div>
+    
+    
+    
+    
 
-<script>
-const matches=[{team1:"Bournemouth",team2:"West Ham",status:"Live"},{team1:"Porto",team2:"Atl. Madrid",status:"Live"},{team1:"Man Utd",team2:"Everton",status:"Starts 03:00 AM"}];
-const servers=["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4","https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_2mb.mp4"];
-const upcoming=["Liverpool vs Athletic Club - 10:00 PM","SummerSlam - 04:00 AM"];
-const matchList=document.getElementById("matchList"),player=document.getElementById("playerContainer"),video=document.getElementById("videoPlayer"),buttons=document.getElementById("serverButtons"),upList=document.getElementById("upcomingList"),title=document.getElementById("matchTitle");
 
-matches.forEach(m=>{let d=document.createElement("div");d.className="match-card";d.innerHTML=`<strong>${m.team1} vs ${m.team2}</strong><br><small>${m.status}</small>`;d.onclick=()=>openPlayer(`${m.team1} vs ${m.team2}`);matchList.appendChild(d);});
-function openPlayer(t){player.classList.add("active");title.textContent=t;video.src=servers[0];loadServers();loadUpcoming();}
-function closePlayer(){player.classList.remove("active");video.pause();}
-function loadServers(){buttons.innerHTML="";servers.forEach((url,i)=>{let b=document.createElement("button");b.textContent=`Server ${i+1}`;b.onclick=()=>{video.src=url;video.play();};buttons.appendChild(b);});}
-function loadUpcoming(){upList.innerHTML="";upcoming.forEach(u=>{let li=document.createElement("li");li.textContent=u;upList.appendChild(li);});}
-</script>
+    <!-- Video Player -->
+    <div id="video-player">
+        <button id="close-btn" onclick="closeVideo()">✖</button>
+        <video id="video" controls autoplay>
+            <source id="video-source" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Server Buttons -->
+        <div id="server-buttons">
+            <button class="server-button" onclick="selectServer('https://svs.itworkscdn.net/smc4sportslive/smc4.smil/smc4sportspublish/smc4tv_720p/chunks.m3u8')">Server 1</button>
+            <button class="server-button" onclick="selectServer('https://crichd.iptvbd.xyz/m3u8.php/starhindi.m3u8')">Server 2</button>
+            <button class="server-button" onclick="selectServer('https://crichd.iptvbd.xyz/m3u8.php/willowusa.m3u8')">Server 3</button>
+            
+        </div>
+
+
+
+    </div>
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+ 
+// লাইভ অ্যানিমেশন শুরু ও শেষের সময় নির্ধারণ
+        const match1StartTime = '14:00'; // ম্যাচ ১ শুরু সময় (HH:MM ফরম্যাটে)
+        const match1EndTime = '23:00';   // ম্যাচ ১ শেষ সময়
+
+        const match2StartTime = '14:00'; // ম্যাচ ২ শুরু সময় (HH:MM ফরম্যাটে)
+        const match2EndTime = '23:00';   // ম্যাচ ২ শেষ সময়
+
+        const match3StartTime = '14:00'; // ম্যাচ ৩ শুরু সময়
+        const match3EndTime = '23:00';   // ম্যাচ ৩ শেষ সময়
+
+        const match4StartTime = '14:00'; // ম্যাচ ৪ শুরু সময়
+        const match4EndTime = '23:00';   // ম্যাচ ৪ শেষ সময়
+
+        const match5StartTime = '14:00'; // ম্যাচ ৫ শুরু সময়
+        const match5EndTime = '23:00';   // ম্যাচ ৫ শেষ সময়
+
+        const match6StartTime = '14:00'; // ম্যাচ ৬ শুরু সময়
+        const match6EndTime = '23:00';   // ম্যাচ ৬ শেষ সময়
+
+        const match7StartTime = '14:00'; // ম্যাচ ৭ শুরু সময়
+        const match7EndTime = '23:00';   // ম্যাচ ৭ শেষ সময়
+
+
+
+const match8StartTime = '14:00'; // ম্যাচ ৮ শুরু সময়
+        const match8EndTime = '23:00';   // ম্যাচ ৮ শেষ সময়
+
+
+
+const match9StartTime = '14:00'; // ম্যাচ ৯ শুরু সময়
+        const match9EndTime = '23:00';   // ম্যাচ ৯ শেষ সময়
+
+
+const match10StartTime = '14:00'; // ম্যাচ ১০ শুরু সময়
+        const match10EndTime = '23:00';   // ম্যাচ ১০ শেষ সময়
+
+
+const match11StartTime = '14:00'; // ম্যাচ ১১ শুরু সময়
+        const match11EndTime = '23:00';   // ম্যাচ ১১ শেষ সময়
+
+
+
+const match12StartTime = '14:00'; // ম্যাচ ১২ শুরু সময়
+        const match12EndTime = '23:00';   // ম্যাচ ১২ শেষ সময়
+
+
+const match13StartTime = '14:00'; // ম্যাচ ১৩ শুরু সময়
+        const match13EndTime = '23:00';   // ম্যাচ ১৩ শেষ সময়
+
+
+
+const match14StartTime = '14:00'; // ম্যাচ ১৪ শুরু সময়
+        const match14EndTime = '23:00';   // ম্যাচ ১৪ শেষ সময়
+
+
+
+const match15StartTime = '14:00'; // ম্যাচ ১৫ শুরু সময়
+        const match15EndTime = '23:00';   // ম্যাচ ১৫ শেষ সময়
+
+
+
+
+
+
+
+
+
+
+
+
+        function checkMatchStatus() {
+            const currentTime = new Date();
+            const currentHourMinute = currentTime.toTimeString().slice(0, 5); // বর্তমান সময় (HH:MM ফরম্যাটে)
+
+
+
+
+
+
+
+            // Match 1: India Vs South Africa 
+            if (currentHourMinute >= match1StartTime && currentHourMinute <= match1EndTime) {
+                document.getElementById('time1').classList.add('hidden');
+                document.getElementById('date1').classList.add('hidden');
+                document.getElementById('live1').classList.remove('hidden');
+            } else {
+                document.getElementById('time1').classList.remove('hidden');
+                document.getElementById('date1').classList.remove('hidden');
+                document.getElementById('live1').classList.add('hidden');
+            }
+
+
+
+    // Match 2: India Vs South Africa 
+            if (currentHourMinute >= match2StartTime && currentHourMinute <= match2EndTime) {
+                document.getElementById('time2').classList.add('hidden');
+                document.getElementById('date2').classList.add('hidden');
+                document.getElementById('live2').classList.remove('hidden');
+            } else {
+                document.getElementById('time2').classList.remove('hidden');
+                document.getElementById('date2').classList.remove('hidden');
+                document.getElementById('live2').classList.add('hidden');
+            }
+
+
+         
+         
+  // Match 3: Saudi Pro League 
+            if (currentHourMinute >= match3StartTime && currentHourMinute <= match3EndTime) {
+                document.getElementById('time3').classList.add('hidden');
+                document.getElementById('date3').classList.add('hidden');
+                document.getElementById('live3').classList.remove('hidden');
+            } else {
+                document.getElementById('time3').classList.remove('hidden');
+                document.getElementById('date3').classList.remove('hidden');
+                document.getElementById('live3').classList.add('hidden');
+            }
+            
+            
+            
+            
+// Match 4: Saudi Pro League 
+            if (currentHourMinute >= match4StartTime && currentHourMinute <= match4EndTime) {
+                document.getElementById('time4').classList.add('hidden');
+                document.getElementById('date4').classList.add('hidden');
+                document.getElementById('live4').classList.remove('hidden');
+            } else {
+                document.getElementById('time4').classList.remove('hidden');
+                document.getElementById('date4').classList.remove('hidden');
+                document.getElementById('live4').classList.add('hidden');
+            }
+            
+            
+            
+// Match 5: Saudi Pro League 
+            if (currentHourMinute >= match5StartTime && currentHourMinute <= match5EndTime) {
+                document.getElementById('time5').classList.add('hidden');
+                document.getElementById('date5').classList.add('hidden');
+                document.getElementById('live5').classList.remove('hidden');
+            } else {
+                document.getElementById('time5').classList.remove('hidden');
+                document.getElementById('date5').classList.remove('hidden');
+                document.getElementById('live5').classList.add('hidden');
+            }            
+            
+
+// Match 6: Saudi Pro League 
+            if (currentHourMinute >= match6StartTime && currentHourMinute <= match6EndTime) {
+                document.getElementById('time6').classList.add('hidden');
+                document.getElementById('date6').classList.add('hidden');
+                document.getElementById('live6').classList.remove('hidden');
+            } else {
+                document.getElementById('time6').classList.remove('hidden');
+                document.getElementById('date6').classList.remove('hidden');
+                document.getElementById('live6').classList.add('hidden');
+            }            
+            
+// Match 7: Saudi Pro League 
+            if (currentHourMinute >= match7StartTime && currentHourMinute <= match7EndTime) {
+                document.getElementById('time7').classList.add('hidden');
+                document.getElementById('date7').classList.add('hidden');
+                document.getElementById('live7').classList.remove('hidden');
+            } else {
+                document.getElementById('time7').classList.remove('hidden');
+                document.getElementById('date7').classList.remove('hidden');
+                document.getElementById('live7').classList.add('hidden');
+            }   
+
+
+
+            
+// Match 8: Saudi Pro League 
+            if (currentHourMinute >= match8StartTime && currentHourMinute <= match8EndTime) {
+                document.getElementById('time8').classList.add('hidden');
+                document.getElementById('date8').classList.add('hidden');
+                document.getElementById('live8').classList.remove('hidden');
+            } else {
+                document.getElementById('time8').classList.remove('hidden');
+                document.getElementById('date8').classList.remove('hidden');
+                document.getElementById('live8').classList.add('hidden');
+            }   
+
+     
+
+            
+// Match 9: Saudi Pro League 
+            if (currentHourMinute >= match9StartTime && currentHourMinute <= match9EndTime) {
+                document.getElementById('time9').classList.add('hidden');
+                document.getElementById('date9').classList.add('hidden');
+                document.getElementById('live9').classList.remove('hidden');
+            } else {
+                document.getElementById('time9').classList.remove('hidden');
+                document.getElementById('date9').classList.remove('hidden');
+                document.getElementById('live9').classList.add('hidden');
+            }   
+
+
+
+
+            
+// Match 10: Saudi Pro League 
+            if (currentHourMinute >= match10StartTime && currentHourMinute <= match10EndTime) {
+                document.getElementById('time10').classList.add('hidden');
+                document.getElementById('date10').classList.add('hidden');
+                document.getElementById('live10').classList.remove('hidden');
+            } else {
+                document.getElementById('time10').classList.remove('hidden');
+                document.getElementById('date10').classList.remove('hidden');
+                document.getElementById('live10').classList.add('hidden');
+            }   
+
+
+            
+// Match 11: Saudi Pro League 
+            if (currentHourMinute >= match11StartTime && currentHourMinute <= match11EndTime) {
+                document.getElementById('time11').classList.add('hidden');
+                document.getElementById('date11').classList.add('hidden');
+                document.getElementById('live11').classList.remove('hidden');
+            } else {
+                document.getElementById('time11').classList.remove('hidden');
+                document.getElementById('date11').classList.remove('hidden');
+                document.getElementById('live11').classList.add('hidden');
+            }   
+
+
+
+            
+// Match 12: Saudi Pro League 
+            if (currentHourMinute >= match12StartTime && currentHourMinute <= match12EndTime) {
+                document.getElementById('time12').classList.add('hidden');
+                document.getElementById('date12').classList.add('hidden');
+                document.getElementById('live12').classList.remove('hidden');
+            } else {
+                document.getElementById('time12').classList.remove('hidden');
+                document.getElementById('date12').classList.remove('hidden');
+                document.getElementById('live12').classList.add('hidden');
+            }   
+
+
+            
+// Match 13: Saudi Pro League 
+            if (currentHourMinute >= match13StartTime && currentHourMinute <= match13EndTime) {
+                document.getElementById('time13').classList.add('hidden');
+                document.getElementById('date13').classList.add('hidden');
+                document.getElementById('live13').classList.remove('hidden');
+            } else {
+                document.getElementById('time13').classList.remove('hidden');
+                document.getElementById('date13').classList.remove('hidden');
+                document.getElementById('live13').classList.add('hidden');
+            }   
+
+
+            
+// Match 14: Saudi Pro League 
+            if (currentHourMinute >= match14StartTime && currentHourMinute <= match14EndTime) {
+                document.getElementById('time14').classList.add('hidden');
+                document.getElementById('date14').classList.add('hidden');
+                document.getElementById('live14').classList.remove('hidden');
+            } else {
+                document.getElementById('time14').classList.remove('hidden');
+                document.getElementById('date14').classList.remove('hidden');
+                document.getElementById('live14').classList.add('hidden');
+            }   
+
+
+
+            
+// Match 15: Saudi Pro League 
+            if (currentHourMinute >= match15StartTime && currentHourMinute <= match15EndTime) {
+                document.getElementById('time15').classList.add('hidden');
+                document.getElementById('date15').classList.add('hidden');
+                document.getElementById('live15').classList.remove('hidden');
+            } else {
+                document.getElementById('time15').classList.remove('hidden');
+                document.getElementById('date15').classList.remove('hidden');
+                document.getElementById('live15').classList.add('hidden');
+            }   
+
+
+
+
+
+
+
+
+
+            
+        }
+     
+
+
+
+        // প্রতি ১ সেকেন্ডে চেক করা হবে ম্যাচের স্ট্যাটাস
+        setInterval(checkMatchStatus, 1000);
+
+// Video Player Functionality
+        function playVideo(videoSrc) {
+            document.getElementById('video-player').style.display = 'flex';
+            document.getElementById('video-source').src = videoSrc;
+            document.getElementById('video').load();
+        }
+
+
+        function closeVideo() {
+            document.getElementById('video-player').style.display = 'none';
+            document.getElementById('video').pause();
+        }
+
+
+        function selectServer(serverSrc) {
+            document.getElementById('video-source').src = serverSrc;
+            document.getElementById('video').load();
+        }
+
+
+    </script>
+
 </body>
 </html>

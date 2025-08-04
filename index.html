@@ -3,39 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRICFy Clone</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Sports803 Clone</title>
+  <style>
+    body {background:#0b0e2f;color:white;font-family:'Segoe UI',sans-serif;margin:0;padding:0;}
+    header {background:#070a2d;padding:15px;text-align:center;font-size:24px;color:white;}
+    .match-list {display:flex;flex-direction:column;padding:10px;}
+    .match-card {background:#1e1e1e;border:1px solid #333;margin:5px 0;padding:10px;border-radius:8px;cursor:pointer;}
+    .match-card:hover {background:#333;}
+    .bottom-sheet {position:fixed;bottom:-100%;left:0;width:100%;background:#121212;border-top:2px solid #444;
+      transition:bottom 0.4s ease-in-out;padding:10px;}
+    .bottom-sheet.active {bottom:0;}
+    video {width:100%;border-radius:10px;margin:10px 0;}
+    button {background:green;color:white;border:none;padding:8px 15px;margin:5px;cursor:pointer;border-radius:5px;}
+    button:hover {background:darkgreen;}
+    .server-section h3, .upcoming-section h3 {margin-top:10px;}
+    .upcoming-section li {list-style:none;background:#1f1f1f;margin:5px 0;padding:5px;border-radius:5px;}
+  </style>
 </head>
 <body>
+  <header>🔥 Sports803 Clone</header>
+  <div class="match-list" id="matchList"></div>
 
-  <!-- Header -->
-  <header>
-    <h1> liveFy </h1>
-  </header>
-
-  <!-- Match Cards -->
-  <section class="matches" id="matchList"></section>
-
-  <!-- Bottom Sheet Player -->
   <div class="bottom-sheet" id="playerContainer">
-    <div class="sheet-header">
-      <span id="matchTitle">Match Title</span>
-      <button onclick="closePlayer()">✖</button>
-    </div>
-
+    <h2 id="matchTitle">Match Title</h2>
     <video id="videoPlayer" controls></video>
-
     <div class="server-section">
       <h3>Choose Server:</h3>
       <div id="serverButtons"></div>
     </div>
-
     <div class="upcoming-section">
       <h3>Upcoming Matches</h3>
       <ul id="upcomingList"></ul>
     </div>
+    <button onclick="closePlayer()">❌ Close</button>
   </div>
 
-<script src="script.js"></script>
+<script>
+const matches=[{team1:"Bournemouth",team2:"West Ham",status:"Live"},{team1:"Porto",team2:"Atl. Madrid",status:"Live"},{team1:"Man Utd",team2:"Everton",status:"Starts 03:00 AM"}];
+const servers=["https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4","https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_2mb.mp4"];
+const upcoming=["Liverpool vs Athletic Club - 10:00 PM","SummerSlam - 04:00 AM"];
+const matchList=document.getElementById("matchList"),player=document.getElementById("playerContainer"),video=document.getElementById("videoPlayer"),buttons=document.getElementById("serverButtons"),upList=document.getElementById("upcomingList"),title=document.getElementById("matchTitle");
+
+matches.forEach(m=>{let d=document.createElement("div");d.className="match-card";d.innerHTML=`<strong>${m.team1} vs ${m.team2}</strong><br><small>${m.status}</small>`;d.onclick=()=>openPlayer(`${m.team1} vs ${m.team2}`);matchList.appendChild(d);});
+function openPlayer(t){player.classList.add("active");title.textContent=t;video.src=servers[0];loadServers();loadUpcoming();}
+function closePlayer(){player.classList.remove("active");video.pause();}
+function loadServers(){buttons.innerHTML="";servers.forEach((url,i)=>{let b=document.createElement("button");b.textContent=`Server ${i+1}`;b.onclick=()=>{video.src=url;video.play();};buttons.appendChild(b);});}
+function loadUpcoming(){upList.innerHTML="";upcoming.forEach(u=>{let li=document.createElement("li");li.textContent=u;upList.appendChild(li);});}
+</script>
 </body>
 </html>

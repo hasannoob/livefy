@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cricfy-style Live Cricket App with Video Player</title>
+  <title>Livefy - Live Cricket & TV</title>
   <style>
     /* Reset & base */
     * {
@@ -16,19 +16,24 @@
       color: #222;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
+
     /* Header */
     header {
       background: #0084ff;
       color: white;
       padding: 1rem;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-weight: 700;
       text-align: center;
       position: sticky;
       top: 0;
       z-index: 1001;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      user-select: none;
     }
 
     /* Scrolling headline container */
@@ -42,19 +47,15 @@
       height: 35px;
       display: flex;
       align-items: center;
-    }
-
-    /* Scrolling headline text */
-    .headline-text {
-      display: inline-block;
-      padding-left: 100%; /* start outside right */
       font-weight: 600;
       color: #fff;
       font-size: 1rem;
+    }
+    .headline-text {
+      display: inline-block;
+      padding-left: 100%;
       animation: scroll-left 15s linear infinite;
     }
-
-    /* Keyframes for scroll */
     @keyframes scroll-left {
       0% {
         transform: translateX(0%);
@@ -64,14 +65,49 @@
       }
     }
 
-    /* Container */
+    /* Main container */
     main {
-      padding: 1rem;
-      max-width: 600px;
+      flex: 1;
+      max-width: 700px;
       margin: 0 auto;
-      margin-top: 40px; /* to avoid overlap with sticky headline */
+      padding: 1rem;
+      margin-top: 10px;
     }
-    /* Match card */
+
+    /* Tabs nav */
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.6rem 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+      user-select: none;
+      z-index: 1002;
+    }
+    nav button {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #555;
+      cursor: pointer;
+      padding: 0.4rem 0.8rem;
+      border-radius: 25px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    nav button.active,
+    nav button:hover {
+      background-color: #0084ff;
+      color: white;
+      box-shadow: 0 3px 8px rgba(0,132,255,0.5);
+    }
+
+    /* Match Card */
     .match-card {
       background: white;
       border-radius: 10px;
@@ -80,64 +116,89 @@
       margin-bottom: 1rem;
       cursor: pointer;
       transition: box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
     }
     .match-card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
     }
+
+    /* Match header layout */
     .match-header {
       display: flex;
       justify-content: space-between;
-      font-weight: 600;
+      align-items: center;
+      font-weight: 700;
       font-size: 1.1rem;
       color: #444;
+      position: relative;
+      padding: 0 40px; /* for live center */
     }
-    .match-status {
-      font-weight: 700;
-      color: #0084ff;
+    .team-left, .team-right {
+      width: 40%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .match-status.live {
-      color: #28a745; /* green for live */
+    .live-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #28a745;
+      font-weight: 800;
+      font-size: 1.2rem;
+      user-select: none;
     }
-    .match-status.upcoming {
-      color: #ff9800; /* orange for upcoming */
-    }
-    .match-details {
-      margin-top: 0.5rem;
-      color: #666;
-      font-size: 0.95rem;
-    }
-    /* Stream button */
-    .stream-btn {
-      margin-top: 1rem;
-      display: inline-block;
-      background-color: #0084ff;
-      color: white;
-      padding: 0.5rem 1.2rem;
-      border-radius: 25px;
+
+    /* Watch now button under live text */
+    .watch-now {
+      text-align: center;
+      margin-top: 6px;
       font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 3px 8px rgba(0,132,255,0.4);
-      transition: background-color 0.3s ease;
+      color: #0084ff;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
     }
-    .stream-btn:hover {
-      background-color: #005bb5;
+    .watch-now:hover {
+      color: #005bb5;
+      text-decoration: underline;
     }
-    /* Responsive */
-    @media (max-width: 400px) {
-      .match-header {
-        flex-direction: column;
-        gap: 0.3rem;
-        font-size: 1rem;
-      }
-      .stream-btn {
-        width: 100%;
-        text-align: center;
-      }
+
+    /* Channel card for TV */
+    .channel-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+      padding: 0.6rem 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .channel-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    }
+    .channel-logo {
+      width: 60px;
+      height: 40px;
+      object-fit: contain;
+      margin-right: 1rem;
+      border-radius: 6px;
+      background: #eee;
+    }
+    .channel-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #222;
     }
 
     /* Modal styles */
     .modal {
-      display: none; /* hidden by default */
+      display: none;
       position: fixed;
       z-index: 1100;
       left: 0;
@@ -145,7 +206,7 @@
       width: 100vw;
       height: 100vh;
       overflow: auto;
-      background-color: rgba(0,0,0,0.7);
+      background-color: rgba(0,0,0,0.75);
       justify-content: center;
       align-items: center;
     }
@@ -182,20 +243,47 @@
       height: 36px;
       line-height: 36px;
       text-align: center;
+      z-index: 1110;
+    }
+
+    /* Responsive */
+    @media (max-width: 420px) {
+      .team-left, .team-right {
+        width: 35%;
+        font-size: 0.9rem;
+      }
+      .live-center {
+        font-size: 1rem;
+      }
+      nav button {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.6rem;
+      }
+      .channel-logo {
+        width: 50px;
+        height: 34px;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>🎉 Live Cricket Scores • livefy Style 🎉</header>
+<header>🎉 Livefy - Live Cricket & TV 🎉</header>
 
 <div class="headline-container">
-  <div class="headline-text">🔥 Live Cricket Update: India 🇮🇳 vs Australia 🇦🇺 - IND 150/3 (20.2 ov) • Watch Now on Cricfy! 🔥</div>
+  <div class="headline-text">🔥 Live Cricket Update: India 🇮🇳 vs Australia 🇦🇺 - IND 150/3 (20.2 ov) • Watch Now on Livefy! 🔥</div>
 </div>
 
-<main id="matches-container">
-  <!-- Matches will load here -->
+<main id="content-container">
+  <!-- Dynamic Content loads here -->
 </main>
+
+<!-- Bottom Navigation Tabs -->
+<nav>
+  <button id="tab-home" class="active">Home</button>
+  <button id="tab-live-tv">Live TV</button>
+  <button id="tab-sports-tv">Sports TV</button>
+</nav>
 
 <!-- Video Modal -->
 <div id="video-modal" class="modal">
@@ -209,33 +297,65 @@
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <script>
+  // Data sets for each tab
   const matches = [
     { 
-      teams: 'India 🇮🇳 vs Australia 🇦🇺', 
+      leftTeam: 'India 🇮🇳', 
+      rightTeam: 'Australia 🇦🇺', 
       status: 'Live', 
       score: 'IND 150/3 (20.2 ov)', 
       stream: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' 
     },
     { 
-      teams: 'England 🇬🇧 vs Pakistan 🇵🇰', 
+      leftTeam: 'England 🇬🇧', 
+      rightTeam: 'Pakistan 🇵🇰', 
       status: 'Upcoming', 
       score: 'Starts in 2 hours', 
       stream: '' 
     },
     { 
-      teams: 'South Africa 🇿🇦 vs New Zealand 🇳🇿', 
+      leftTeam: 'South Africa 🇿🇦', 
+      rightTeam: 'New Zealand 🇳🇿', 
       status: 'Completed', 
       score: 'SA won by 30 runs', 
       stream: '' 
     }
   ];
 
-  const container = document.getElementById('matches-container');
+  const liveTVChannels = [
+    {
+      name: 'News Channel 1',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Al_Jazeera_English_logo.svg/2560px-Al_Jazeera_English_logo.svg.png',
+      stream: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+    },
+    {
+      name: 'Entertainment TV',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/BBC_Two_logo_2019.svg/1280px-BBC_Two_logo_2019.svg.png',
+      stream: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+    }
+  ];
+
+  const sportsTVChannels = [
+    {
+      name: 'Sports Channel 1',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/ESPN_logo.svg/2560px-ESPN_logo.svg.png',
+      stream: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+    },
+    {
+      name: 'Sports Channel 2',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Star_Sports_India_Logo.svg/2560px-Star_Sports_India_Logo.svg.png',
+      stream: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+    }
+  ];
+
+  const container = document.getElementById('content-container');
   const modal = document.getElementById('video-modal');
   const video = document.getElementById('video-player');
   const modalClose = document.getElementById('modal-close');
+
   let hls;
 
+  // Open modal video player
   function openModal(streamUrl) {
     if(hls) {
       hls.destroy();
@@ -260,6 +380,7 @@
     modal.classList.add('active');
   }
 
+  // Close modal video player
   function closeModal() {
     modal.classList.remove('active');
     video.pause();
@@ -269,38 +390,92 @@
       hls = null;
     }
   }
-
   modalClose.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', (e) => {
+  modal.addEventListener('click', e => {
     if(e.target === modal) closeModal();
   });
 
-  // Build match cards
-  matches.forEach(match => {
-    const card = document.createElement('div');
-    card.classList.add('match-card');
+  // Render functions for each tab
+  function renderHome() {
+    container.innerHTML = '';
+    matches.forEach(match => {
+      const card = document.createElement('div');
+      card.classList.add('match-card');
 
-    const statusClass = match.status.toLowerCase();
+      card.innerHTML = `
+        <div class="match-header">
+          <div class="team-left">${match.leftTeam}</div>
+          <div class="live-center">${match.status === 'Live' ? 'Live' : ''}</div>
+          <div class="team-right">${match.rightTeam}</div>
+        </div>
+        <div class="watch-now">${match.status === 'Live' && match.stream ? 'Watch Now' : match.score}</div>
+      `;
 
-    card.innerHTML = `
-      <div class="match-header">
-        <div class="match-teams">${match.teams}</div>
-        <div class="match-status ${statusClass}">${match.status}</div>
-      </div>
-      <div class="match-details">${match.score}</div>
-      ${match.stream ? `<a href="#" class="stream-btn">Watch Now</a>` : ''}
-    `;
+      if(match.status === 'Live' && match.stream) {
+        card.querySelector('.watch-now').style.cursor = 'pointer';
+        card.querySelector('.watch-now').addEventListener('click', () => openModal(match.stream));
+      }
 
-    if (match.stream) {
-      card.querySelector('.stream-btn').addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal(match.stream);
-      });
-    }
+      container.appendChild(card);
+    });
+  }
 
-    container.appendChild(card);
+  function renderLiveTV() {
+    container.innerHTML = '';
+    liveTVChannels.forEach(channel => {
+      const card = document.createElement('div');
+      card.classList.add('channel-card');
+      card.innerHTML = `
+        <img src="${channel.logo}" alt="${channel.name} Logo" class="channel-logo" />
+        <div class="channel-name">${channel.name}</div>
+      `;
+      card.addEventListener('click', () => openModal(channel.stream));
+      container.appendChild(card);
+    });
+  }
+
+  function renderSportsTV() {
+    container.innerHTML = '';
+    sportsTVChannels.forEach(channel => {
+      const card = document.createElement('div');
+      card.classList.add('channel-card');
+      card.innerHTML = `
+        <img src="${channel.logo}" alt="${channel.name} Logo" class="channel-logo" />
+        <div class="channel-name">${channel.name}</div>
+      `;
+      card.addEventListener('click', () => openModal(channel.stream));
+      container.appendChild(card);
+    });
+  }
+
+  // Tab buttons & handlers
+  const tabHome = document.getElementById('tab-home');
+  const tabLiveTV = document.getElementById('tab-live-tv');
+  const tabSportsTV = document.getElementById('tab-sports-tv');
+
+  function setActiveTab(tab) {
+    [tabHome, tabLiveTV, tabSportsTV].forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  }
+
+  tabHome.addEventListener('click', () => {
+    setActiveTab(tabHome);
+    renderHome();
   });
+
+  tabLiveTV.addEventListener('click', () => {
+    setActiveTab(tabLiveTV);
+    renderLiveTV();
+  });
+
+  tabSportsTV.addEventListener('click', () => {
+    setActiveTab(tabSportsTV);
+    renderSportsTV();
+  });
+
+  // Initial load
+  renderHome();
+
 </script>
 
 </body>

@@ -1,105 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Live Cricket Stream</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #222;
-      padding: 15px;
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-    .match {
-      border: 1px solid #333;
-      margin: 20px auto;
-      padding: 10px;
-      max-width: 500px;
-      border-radius: 10px;
-      background: #1e1e1e;
-    }
-    .live-badge {
-      display: inline-block;
-      background: red;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 0.9em;
-      margin-bottom: 10px;
-    }
-    video {
-      width: 100%;
-      max-height: 300px;
-      border-radius: 10px;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Cricket Streaming</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
-  <header>🏏 Live Cricket Streaming</header>
+    <header>
+        <h1>🏏 Live Cricket Streaming</h1>
+    </header>
 
-  <div id="matches"></div>
+    <main>
+        <div class="match-card" data-time="2025-08-08T16:00:00">
+            <h2>Match 1 - Team A vs Team B</h2>
+            <span class="status">Starting Soon</span>
+            <video id="video1" controls></video>
+            <!-- এখানে তোমার .m3u8 লিংক বসবে -->
+            <script>
+                const link1 = ""; // এখানে লিংক দাও
+                if (Hls.isSupported()) {
+                    const hls = new Hls();
+                    hls.loadSource(link1);
+                    hls.attachMedia(document.getElementById('video1'));
+                }
+            </script>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script>
-    // ম্যাচের ডাটা (টাইম 24 ঘন্টা ফরম্যাটে)
-    const matchList = [
-      { title: "Match 1 - Team A vs Team B", time: "14:00", link: "YOUR_STREAM_LINK_HERE" },
-      { title: "Match 2 - Team C vs Team D", time: "19:00", link: "YOUR_STREAM_LINK_HERE" }
-    ];
+        <div class="match-card" data-time="2025-08-08T20:00:00">
+            <h2>Match 2 - Team C vs Team D</h2>
+            <span class="status">Starting Soon</span>
+            <video id="video2" controls></video>
+            <!-- এখানে তোমার .m3u8 লিংক বসবে -->
+            <script>
+                const link2 = ""; // এখানে লিংক দাও
+                if (Hls.isSupported()) {
+                    const hls2 = new Hls();
+                    hls2.loadSource(link2);
+                    hls2.attachMedia(document.getElementById('video2'));
+                }
+            </script>
+        </div>
+    </main>
 
-    function isLive(time) {
-      const now = new Date();
-      const [h, m] = time.split(":").map(Number);
-      const matchTime = new Date();
-      matchTime.setHours(h, m, 0, 0);
-      return Math.abs(now - matchTime) < 3 * 60 * 60 * 1000; // 3 ঘন্টার মধ্যে হলে লাইভ
-    }
-
-    function renderMatches() {
-      const container = document.getElementById("matches");
-      container.innerHTML = "";
-
-      matchList.forEach(match => {
-        const matchDiv = document.createElement("div");
-        matchDiv.className = "match";
-
-        const liveBadge = isLive(match.time) ? `<div class="live-badge">LIVE NOW</div>` : "";
-
-        matchDiv.innerHTML = `
-          <h2>${match.title}</h2>
-          ${liveBadge}
-          <video id="video-${match.title}" controls class="${isLive(match.time) ? "" : "hidden"}"></video>
-          <p>Start Time: ${match.time}</p>
-        `;
-        container.appendChild(matchDiv);
-
-        if (isLive(match.time) && match.link) {
-          const video = document.getElementById(`video-${match.title}`);
-          if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(match.link);
-            hls.attachMedia(video);
-          } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = match.link;
-          }
+    <script>
+        // ম্যাচ টাইম চেক করে LIVE NOW দেখাবে
+        function updateMatchStatus() {
+            const now = new Date();
+            document.querySelectorAll('.match-card').forEach(card => {
+                const matchTime = new Date(card.getAttribute('data-time'));
+                const status = card.querySelector('.status');
+                if (now >= matchTime) {
+                    status.textContent = "🔴 LIVE NOW";
+                    status.classList.add('live');
+                } else {
+                    status.textContent = "Starting Soon";
+                    status.classList.remove('live');
+                }
+            });
         }
-      });
-    }
-
-    renderMatches();
-    setInterval(renderMatches, 60000); // প্রতি ১ মিনিটে আপডেট
-  </script>
+        setInterval(updateMatchStatus, 1000);
+        updateMatchStatus();
+    </script>
 </body>
 </html>

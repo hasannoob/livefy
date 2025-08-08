@@ -27,14 +27,49 @@
       text-align: center;
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 1001;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
+    /* Scrolling headline container */
+    .headline-container {
+      background: #005bb5;
+      overflow: hidden;
+      white-space: nowrap;
+      position: sticky;
+      top: 56px; /* header height + small gap */
+      z-index: 1000;
+      height: 35px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Scrolling headline text */
+    .headline-text {
+      display: inline-block;
+      padding-left: 100%; /* start outside right */
+      font-weight: 600;
+      color: #fff;
+      font-size: 1rem;
+      animation: scroll-left 15s linear infinite;
+    }
+
+    /* Keyframes for scroll */
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
     /* Container */
     main {
       padding: 1rem;
       max-width: 600px;
       margin: 0 auto;
+      margin-top: 40px; /* to avoid overlap with sticky headline */
     }
     /* Match card */
     .match-card {
@@ -154,6 +189,10 @@
 
 <header>🎉 Live Cricket Scores • livefy Style 🎉</header>
 
+<div class="headline-container">
+  <div class="headline-text">🔥 Live Cricket Update: India 🇮🇳 vs Australia 🇦🇺 - IND 150/3 (20.2 ov) • Watch Now on Cricfy! 🔥</div>
+</div>
+
 <main id="matches-container">
   <!-- Matches will load here -->
 </main>
@@ -175,7 +214,7 @@
       teams: 'India 🇮🇳 vs Australia 🇦🇺', 
       status: 'Live', 
       score: 'IND 150/3 (20.2 ov)', 
-      stream: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' // এখানে m3u8 স্ট্রিম দিবে 
+      stream: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' 
     },
     { 
       teams: 'England 🇬🇧 vs Pakistan 🇵🇰', 
@@ -233,7 +272,6 @@
 
   modalClose.addEventListener('click', closeModal);
 
-  // Click outside modal content closes modal
   modal.addEventListener('click', (e) => {
     if(e.target === modal) closeModal();
   });
